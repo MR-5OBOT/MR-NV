@@ -21,8 +21,3 @@ vim.api.nvim_create_autocmd("TextYankPost", {
         vim.highlight.on_yank()
     end,
 })
-
--- Auto format Python on save with black
--- vim.cmd([[autocmd BufWritePre *.py execute ':!black %']])
--- vim.cmd([[autocmd BufWritePre *.py execute ':!isort %']])
--- vim.cmd([[autocmd BufWritePre *.py execute ':!flake8 %']])
