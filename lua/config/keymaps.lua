@@ -37,4 +37,26 @@ keymap("n", "k", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true }
 keymap("n", "<leader>e", ":Explore<CR>", { noremap = true, silent = true })
 
 -- Keymap to run the current file (e.g., for a Python script)
-keymap("n", "<leader>r", ":botright split | resize 10 | terminal python %<CR>i", { noremap = true, silent = true })
+-- keymap("n", "<leader>r", ":botright split | resize 10 | terminal python %<CR>i", { noremap = true, silent = true })
+
+keymap("n", "<leader>r", function()
+	-- Access your existing toggleterm configuration
+	local Terminal = require("toggleterm.terminal").Terminal
+
+	-- Create a new terminal instance with your custom settings
+	local python_term = Terminal:new({
+		cmd = "python " .. vim.fn.expand("%"), -- Run the current file
+		dir = vim.fn.expand("%:p:h"), -- Run in the directory of the current file
+		direction = "float", -- Use floating mode
+		hidden = true, -- Hide the terminal instead of closing it
+		on_open = function()
+			vim.cmd("startinsert!") -- Automatically enter insert mode
+		end,
+		on_close = function()
+			vim.cmd("stopinsert!") -- Exit insert mode when the terminal closes
+		end,
+	})
+
+	-- Toggle the terminal
+	python_term:toggle()
+end, { noremap = true, silent = true })

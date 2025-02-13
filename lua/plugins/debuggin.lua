@@ -15,11 +15,12 @@ return {
             require("dapui").setup({})
             require("nvim-dap-virtual-text").setup({
                 commented = true, -- Show virtual text alongside comment
+                all_frames = true, -- Show virtual text for all frames (function calls)
+                virt_text_pos = "eol", -- Position of virtual text (at the end of line)
             })
 
             -- Python debugging setup
             require("dap-python").setup("/usr/bin/python3")
-
 
             vim.fn.sign_define("DapBreakpoint", {
                 text = "",
@@ -48,6 +49,19 @@ return {
             end
 
             local opts = { noremap = true, silent = true }
+
+            dap.listeners.after.event_stopped["dapui_config"] = function()
+                dapui.open()
+            end
+
+            -- Show variables when hovering
+            vim.keymap.set("n", "<leader>dh", function()
+                dapui.eval()
+            end, opts)
+
+            vim.keymap.set("n", "<leader>dw", function()
+                dapui.open({ sidebar = "watch" })
+            end, opts)
 
             -- Toggle breakpoint
             vim.keymap.set("n", "<leader>db", function()
