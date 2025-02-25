@@ -1,25 +1,25 @@
 return {
-    "akinsho/bufferline.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    version = "*",
-    opts = {
-        options = {
-            diagnostics = "nvim_lsp",
-            diagnostics_indicator = function(count, level)
-                local icon = level:match("error") and "🔴" or "🟡"
-                return " " .. icon .. count
-            end,
-            mode = "buffers",
-            separator_style = "",
-            offsets = {
-                {
-                    filetype = "NvimTree",
-                    text = "File Explorer",
-                    highlight = "Directory",
-                    separator = true,
-                    padding = 1,
-                }
-            },
-        },
-    },
+	"akinsho/bufferline.nvim",
+	dependencies = { "nvim-tree/nvim-web-devicons" },
+	version = "*",
+	opts = {
+		options = {
+			diagnostics = "nvim_lsp",
+			diagnostics_indicator = function(count, level)
+				local icon = level:match("error") and "🔴" or "🟡"
+				return " " .. icon .. count
+			end,
+			mode = "buffers",
+			separator_style = "",
+			offsets = {
+				{
+					filetype = "NvimTree",
+					text = "File Explorer",
+					highlight = "Directory",
+					separator = true,
+					padding = 1,
+				},
+			},
+		},
+	},
 }

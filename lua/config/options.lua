@@ -1,4 +1,4 @@
--- Set options for Neovim
+-- options for Neovim
 local opt = vim.opt
 opt.clipboard = "unnamedplus" -- Use system clipboard
 opt.number = true -- Show absolute line numbers
@@ -13,20 +13,20 @@ opt.ignorecase = true -- Ignore case in search
 opt.smartcase = true -- Enable smart case search
 opt.hlsearch = true -- Highlight search matches
 opt.splitbelow = true -- Horizontal splits go below
-opt.scrolloff = 10 -- Lines to keep above/below the cursor
-opt.sidescrolloff = 8 -- Columns to keep left/right of the cursor
 opt.splitright = true -- Vertical splits go right
+opt.scrolloff = 8 -- Lines to keep above/below the cursor
+opt.sidescrolloff = 8 -- Columns to keep left/right of the cursor
 opt.updatetime = 300 -- Update time for CursorHold
 opt.backup = false -- Disable backups
 opt.undofile = true -- Enable persistent undo
 opt.swapfile = false
-opt.history = 100 -- Command history size
+opt.history = 50 -- Command history size
 opt.linebreak = true -- Don't split words when wrapping
 opt.wrap = false -- Disable line wrapping
 opt.cmdheight = 2 -- Command line height
 opt.cursorline = true -- Highlight current line
 opt.fileencoding = "utf-8" -- File encoding
-opt.laststatus = 3
+opt.laststatus = 0 -- Disable status line
 opt.smartindent = true -- Enable smart indentation
 -- opt.lazyredraw = true         -- Improve performance during redraw
 

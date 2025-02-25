@@ -10,7 +10,6 @@ return {
         config = function()
             local dap = require("dap")
             local dapui = require("dapui")
-            local dap_python = require("dap-python")
 
             require("dapui").setup({})
             require("nvim-dap-virtual-text").setup({
@@ -49,10 +48,6 @@ return {
             end
 
             local opts = { noremap = true, silent = true }
-
-            dap.listeners.after.event_stopped["dapui_config"] = function()
-                dapui.open()
-            end
 
             -- Show variables when hovering
             vim.keymap.set("n", "<leader>dh", function()
