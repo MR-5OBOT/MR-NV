@@ -10,7 +10,11 @@ return {
 				return " " .. icon .. count
 			end,
 			mode = "buffers",
-			separator_style = "",
+			-- indicator = {
+			-- 	style = "underline",
+			-- },
+			-- separator_style = "slant", -- padded_slant, slant, slope, padded_slope, thick, thin
+			-- show_buffer_close_icons = false, -- Optional: Show close icons
 			offsets = {
 				{
 					filetype = "NvimTree",

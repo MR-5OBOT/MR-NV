@@ -1,5 +1,6 @@
 -- options for Neovim
 local opt = vim.opt
+
 opt.clipboard = "unnamedplus" -- Use system clipboard
 opt.number = true -- Show absolute line numbers
 opt.relativenumber = true -- Show relative line numbers
@@ -26,7 +27,7 @@ opt.wrap = false -- Disable line wrapping
 opt.cmdheight = 2 -- Command line height
 opt.cursorline = true -- Highlight current line
 opt.fileencoding = "utf-8" -- File encoding
-opt.laststatus = 0 -- Disable status line
+-- opt.laststatus = 0 -- Disable status line
 opt.smartindent = true -- Enable smart indentation
 -- opt.lazyredraw = true         -- Improve performance during redraw
 
