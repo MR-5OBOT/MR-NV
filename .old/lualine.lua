@@ -81,9 +81,33 @@ return {
 		})
 
 		ins_left({
-			-- mode component
+			-- Mode component with text instead of icon
 			function()
-				return ""
+				-- Map vim modes to readable names
+				local mode_map = {
+					n = "NORMAL",
+					i = "INSERT",
+					v = "VISUAL",
+					[""] = "V-BLOCK",
+					V = "V-LINE",
+					c = "COMMAND",
+					no = "OPERATOR",
+					s = "SELECT",
+					S = "S-LINE",
+					[""] = "S-BLOCK",
+					ic = "INS-COMP",
+					R = "REPLACE",
+					Rv = "V-REPLACE",
+					cv = "VIM-EX",
+					ce = "EX",
+					r = "PROMPT",
+					rm = "MORE",
+					["r?"] = "CONFIRM",
+					["!"] = "SHELL",
+					t = "TERMINAL",
+				}
+				-- Get the current mode and map it, default to "UNKNOWN" if not found
+				return mode_map[vim.fn.mode()] or "UNKNOWN"
 			end,
 			color = function()
 				local mode_color = {
