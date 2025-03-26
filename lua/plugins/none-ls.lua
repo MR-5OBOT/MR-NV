@@ -34,7 +34,7 @@ return {
                     }),
                     null_ls.builtins.formatting.black.with({
                         condition = skip_large_files,
-                        extra_args = { "--line-length", "150" },
+                        extra_args = { "--line-length", "135" },
                     }),
                     null_ls.builtins.formatting.stylua.with({
                         condition = skip_large_files,

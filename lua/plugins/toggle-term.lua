@@ -16,7 +16,7 @@
 --             close_on_exit = true,
 --             start_in_insert = true,
 --             auto_scroll = true,
---             direction = 'float',
+--             direction = "float",
 --
 --             float_opts = {
 --                 border = "single",
@@ -27,17 +27,16 @@
 --                     background = "Normal",
 --                 },
 --             },
---
 --         })
 --     end,
 -- }
-
+--
 return {
 	"akinsho/toggleterm.nvim",
 	version = "*",
 	config = function()
 		require("toggleterm").setup({
-			size = 20, -- Height of the terminal pane (adjust as needed)
+			size = 25, -- Height of the terminal pane (adjust as needed)
 			open_mapping = [[<C-\>]], -- Keymap to toggle the terminal (Ctrl-t here)
 			direction = "horizontal", -- Opens as a horizontal split (pane) below
 			shade_terminals = false, -- No shading to keep it looking plain

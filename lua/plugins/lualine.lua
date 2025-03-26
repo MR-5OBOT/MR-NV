@@ -191,7 +191,7 @@ return {
 			"fileformat",
 			fmt = string.upper,
 			icons_enabled = false,
-			color = { fg = colors.green, gui = "bold" },
+			color = { fg = colors.green },
 		})
 
 		ins_right({ "location", color = { fg = "#7D8083" } })
