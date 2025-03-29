@@ -38,6 +38,7 @@ return {
                     }),
                     null_ls.builtins.formatting.stylua.with({
                         condition = skip_large_files,
+                        extra_args = { "--line-length", "140" },
                     }),
                     null_ls.builtins.formatting.shfmt.with({
                         condition = skip_large_files,
