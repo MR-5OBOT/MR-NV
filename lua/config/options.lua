@@ -30,7 +30,7 @@ opt.fileencoding = "utf-8"    -- File encoding
 -- opt.laststatus = 0 -- Disable status line
 opt.smartindent = true        -- Enable smart indentation
 -- opt.lazyredraw = true         -- Improve performance during redraw
--- opt.winborder = rounded
+opt.winborder = "rounded"     -- Defines the default border style of floating windows.
 
 -- Disable built-in plugins
 vim.g.loaded_netrw = 1       -- Disable Netrw
