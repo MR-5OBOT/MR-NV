@@ -10,10 +10,12 @@ return {
             local lspconfig = require("lspconfig")
             local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
-            -- Ensure LSP hover uses borders
-            vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-                border = "rounded",
-            })
+            -- -- Ensure LSP hover uses borders
+            -- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+            --     border = "rounded",
+            -- })
+            -- diagnostics
+            -- vim.diagnostic.config({ virtual_lines = true }),
 
             -- Diagnostic settings
             vim.diagnostic.config({

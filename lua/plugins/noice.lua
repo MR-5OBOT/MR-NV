@@ -8,7 +8,7 @@ return {
     opts = function(_, opts)
         -- only way to make lsp hover works for me
         opts.presets = opts.presets or {}
-        opts.presets.lsp_doc_border = true
+        opts.presets.lsp_doc_border = false
 
         -- style
         opts.views = {
