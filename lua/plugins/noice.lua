@@ -6,11 +6,11 @@ return {
         -- "rcarriga/nvim-notify",
     },
     opts = function(_, opts)
-        -- only way to make lsp hover works for me
-        opts.presets = opts.presets or {}
-        opts.presets.lsp_doc_border = false
+        -- Add custom route to filter LSP messages
+        -- opts.presets = opts.presets or {}
+        -- opts.presets.lsp_doc_border = true
 
-        -- style
+        -- Assign views properly
         opts.views = {
             cmdline_popup = {
                 border = {
