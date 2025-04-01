@@ -8,5 +8,6 @@
 ---------------------------------------------------------------
 require("config.keymaps")
 require("config.options")
+require("config.custom")
 require("config.autocommands")
 require("config.lazy-cfg")

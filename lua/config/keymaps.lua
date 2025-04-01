@@ -32,6 +32,8 @@ keymap("n", "k", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true }
 
 keymap("n", "<leader>e", ":Explore<CR>", { noremap = true, silent = true })
 
+
+
 -- Define a function to run the Python file in a tmux pane on the right
 local function run_python_in_tmux()
     -- Get the current file path

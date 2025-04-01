@@ -34,7 +34,7 @@ return {
                     find_command = { 'rg', '--files', '--hidden', '--ignore', '--glob', '!.git/*' } -- Exclude .git files
                 },
             },
-            extentions = {
+            extensions = {
                 fzf = {}
             },
         }
@@ -53,11 +53,11 @@ return {
         end)
 
         -- nvim config dir
-        vim.keymap.set("n", "<space>fc", function()
-            local opts = require("telescope.themes").get_ivy({
-                cwd = vim.fn.stdpath("config")
-            })
-            require("telescope.builtin").find_files(opts)
-        end)
+        -- vim.keymap.set("n", "<space>fc", function()
+        --     local opts = require("telescope.themes").get_ivy({
+        --         cwd = vim.fn.stdpath("config")
+        --     })
+        --     require("telescope.builtin").find_files(opts)
+        -- end)
     end,
 }
