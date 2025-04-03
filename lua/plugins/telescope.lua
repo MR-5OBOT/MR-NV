@@ -10,28 +10,25 @@ return {
         local actions = require('telescope.actions')
         require('telescope').setup {
             defaults = {
-                file_ignore_patterns = { ".git/", "node_modules/", ".DS_Store" }, -- Patterns to ignore
+                file_ignore_patterns = { ".git/", "node_modules/", ".DS_Store" },
                 layout_config = {
                     horizontal = {
-                        prompt_position = "top", -- Position of the prompt
-                        preview_width = 0.6,     -- Width of the preview window
-                        -- results_width = 0.2, -- Width of the results window
+                        prompt_position = "top",
+                        preview_width = 0.6,
                     },
                 },
-                -- prompt_prefix = "   ", -- Custom prompt prefix
                 mappings = {
                     i = {
-                        ["<C-j>"] = actions.move_selection_next,     -- Move down in insert mode
-                        ["<C-k>"] = actions.move_selection_previous, -- Move up in insert mode
-                        ["<esc>"] = actions.close,                   -- Close the picker
+                        ["<C-j>"] = actions.move_selection_next,
+                        ["<C-k>"] = actions.move_selection_previous,
+                        ["<esc>"] = actions.close,
                     },
                 }
             },
             pickers = {
                 find_files = {
-                    -- theme = "ivy",
-                    hidden = true,                                                                  -- Allow searching hidden files
-                    find_command = { 'rg', '--files', '--hidden', '--ignore', '--glob', '!.git/*' } -- Exclude .git files
+                    hidden = true,
+                    find_command = { 'rg', '--files', '--hidden', '--ignore', '--glob', '!.git/*' }
                 },
             },
             extensions = {
@@ -39,25 +36,27 @@ return {
             },
         }
 
-        -- keymaps
+        -- keymaps for built-in actions
         local builtin = require('telescope.builtin')
 
+        -- Find files, buffers, help tags, and more
         vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
+        vim.keymap.set("n", "<space>fh", builtin.help_tags, { desc = 'Telescope help tags' })
         vim.keymap.set("n", "<space>fb", builtin.buffers, { desc = 'Telescope Buffers' })
-        vim.keymap.set("n", "<space>fh", builtin.help_tags)
 
-        -- live grep with cursor style
         vim.keymap.set("n", "<space>fg", function()
             local opts = require("telescope.themes").get_cursor()
             require("telescope.builtin").live_grep(opts)
-        end)
+        end, { desc = 'Telescope live grep' })
 
-        -- nvim config dir
-        -- vim.keymap.set("n", "<space>fc", function()
-        --     local opts = require("telescope.themes").get_ivy({
-        --         cwd = vim.fn.stdpath("config")
-        --     })
-        --     require("telescope.builtin").find_files(opts)
-        -- end)
+        vim.keymap.set("n", "<space>fd", builtin.diagnostics, { desc = 'Telescope diagnostics' })
+        vim.keymap.set("n", "<space>fr", builtin.recent_files, { desc = 'Telescope recent files' })
+        vim.keymap.set("n", "<space>ft", builtin.treesitter, { desc = 'Telescope Treesitter' })
+        vim.keymap.set("n", "<space>,", builtin.buffers, { desc = 'Telescope Buffers' })
+
+        -- Git-related pickers
+        vim.keymap.set("n", "<space>fgb", builtin.git_branches, { desc = 'Telescope Git branches' })
+        vim.keymap.set("n", "<space>fgc", builtin.git_commits, { desc = 'Telescope Git commits' })
+        vim.keymap.set("n", "<space>fgs", builtin.git_status, { desc = 'Telescope Git status' })
     end,
 }

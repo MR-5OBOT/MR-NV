@@ -23,7 +23,6 @@ return {
                 ensure_installed = {
                     "ts_ls",
                     "html",
-                    "ruff", -- ✅ Corrected from "ruff-lsp"
                     "cssls",
                     "pyright",
                     "lua_ls",
@@ -40,7 +39,7 @@ return {
                     "isort",
                     "eslint_d",
                     "flake8",
-                    "debugpy", -- Ensuring debugpy is installed
+                    "debugpy",
                 },
                 auto_update = true,
                 run_on_start = true,

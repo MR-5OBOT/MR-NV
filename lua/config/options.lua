@@ -24,12 +24,12 @@ opt.swapfile = false
 opt.history = 50              -- Command history size
 opt.linebreak = true          -- Don't split words when wrapping
 opt.wrap = false              -- Disable line wrapping
-opt.cmdheight = 2             -- Command line height
+-- opt.cmdheight = 2             -- Command line height
 opt.cursorline = true         -- Highlight current line
 opt.fileencoding = "utf-8"    -- File encoding
 opt.laststatus = 0            -- Disable status line
+opt.showtabline = 0           -- Disable tabline
 opt.smartindent = true        -- Enable smart indentation
--- opt.lazyredraw = true         -- Improve performance during redraw
 -- opt.winborder = "rounded"       -- Defines the default border style of floating windows.
 
 -- Disable built-in plugins
