@@ -10,11 +10,11 @@ return {
         { "<leader>e", ":Neotree toggle float<CR>", silent = true, desc = "Float File Explorer" },
     },
     config = function()
-        require("nvim-web-devicons").setup() -- Initialize icons
+        require("nvim-web-devicons").setup() -- Initialize nvim-web-devicons
 
         require("neo-tree").setup({
             close_if_last_window = true,
-            popup_border_style = "rounded",
+            popup_border_style = "single",
             enable_git_status = true,
             enable_modified_markers = true,
             enable_diagnostics = true,
@@ -51,18 +51,19 @@ return {
             window = {
                 position = "float",
                 width = 35,
-                mappings = {
-                    ["<Esc>"] = "close", -- Quickly close the tree
-                },
             },
             filesystem = {
                 use_libuv_file_watcher = true,
-                follow_current_file = true, -- Keep NeoTree focused on current file
                 filtered_items = {
                     hide_dotfiles = false,
                     hide_gitignored = false,
-                    hide_by_name = { "node_modules" },
-                    never_show = { ".DS_Store", "thumbs.db" },
+                    hide_by_name = {
+                        "node_modules",
+                    },
+                    never_show = {
+                        ".DS_Store",
+                        "thumbs.db",
+                    },
                 },
             },
             event_handlers = {

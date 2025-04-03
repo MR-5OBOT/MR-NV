@@ -6,7 +6,7 @@ return {
         config = function()
             -- require('mini.nvim').setup()
             -- require("mini.files").setup()
-            require("mini.animate").setup()
+            -- require("mini.animate").setup()
             require("mini.indentscope").setup()
             require("mini.pairs").setup()
             -- require("mini.notify").setup()
@@ -55,8 +55,8 @@ return {
             vim.keymap.set("n", "<C-j>", nvim_tmux_nav.NvimTmuxNavigateDown)
             vim.keymap.set("n", "<C-k>", nvim_tmux_nav.NvimTmuxNavigateUp)
             vim.keymap.set("n", "<C-l>", nvim_tmux_nav.NvimTmuxNavigateRight)
-            vim.keymap.set("n", "<C-\\>", nvim_tmux_nav.NvimTmuxNavigateLastActive)
-            vim.keymap.set("n", "<C-Space>", nvim_tmux_nav.NvimTmuxNavigateNext)
+            -- vim.keymap.set("n", "<C-\\>", nvim_tmux_nav.NvimTmuxNavigateLastActive)
+            -- vim.keymap.set("n", "<C-Space>", nvim_tmux_nav.NvimTmuxNavigateNext)
         end,
     },
 }
