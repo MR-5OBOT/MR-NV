@@ -13,11 +13,11 @@ return {
             mason_null_ls.setup({
                 ensure_installed = {
                     "prettier", -- ✅ Formatter
-                    "black", -- ✅ Python formatter
-                    "stylua", -- ✅ Lua formatter
-                    "shfmt", -- ✅ Shell formatter
+                    "black",    -- ✅ Python formatter
+                    "stylua",   -- ✅ Lua formatter
+                    "shfmt",    -- ✅ Shell formatter
                     "eslint_d", -- ✅ Linter for JavaScript & TypeScript
-                    "flake8", -- ✅ Python linter
+                    "flake8",   -- ✅ Python linter
                 },
             })
 
@@ -34,7 +34,10 @@ return {
                     }),
                     null_ls.builtins.formatting.black.with({
                         condition = skip_large_files,
-                        extra_args = { "--line-length", "135" },
+                        extra_args = {
+                            "--line-length", "135", -- Set max line length to 135 characters
+                            "--fast",               -- Skip the slower checks
+                        },
                     }),
                     null_ls.builtins.formatting.stylua.with({
                         condition = skip_large_files,

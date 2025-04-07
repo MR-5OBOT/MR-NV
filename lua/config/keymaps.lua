@@ -33,16 +33,16 @@ keymap("n", "k", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true }
 keymap("n", "<leader>e", ":Explore<CR>", { noremap = true, silent = true })
 
 
-
--- Define a function to run the Python file in a tmux pane on the right
 local function run_python_in_tmux()
-    -- Get the current file path
     local file = vim.fn.expand("%:p")
-    -- Command to split tmux vertically and run python on the file
-    local tmux_cmd = string.format("tmux split-window -h 'python3 %s; read -p \"Press enter to exit...\"'", file)
-    -- Execute the tmux command silently
-    vim.fn.system(tmux_cmd)
+    local cmd = string.format(
+        "tmux split-window -h 'clear; python3 \"%s\"; echo; echo Press enter to exit...; read'",
+        file
+    )
+    vim.fn.system(cmd)
 end
+
+vim.keymap.set("n", "<leader>rp", run_python_in_tmux, { desc = "Run current Python file in right tmux split" })
 
 -- Set the keymap
 vim.keymap.set("n", "<leader>rp", run_python_in_tmux, { desc = "Run Python in tmux pane (right)" })

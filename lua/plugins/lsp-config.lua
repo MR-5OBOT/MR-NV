@@ -48,11 +48,7 @@ return {
                     vim.api.nvim_create_autocmd("BufWritePre", {
                         buffer = bufnr,
                         callback = function()
-                            local filetype = vim.bo[bufnr].filetype
-                            local ignored_filetypes = { html = false } -- Skip HTML formatting
-                            if not ignored_filetypes[filetype] then
-                                vim.lsp.buf.format({ async = false })
-                            end
+                            vim.lsp.buf.format({ async = false })
                         end,
                     })
                 end
