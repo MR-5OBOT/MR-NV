@@ -9,24 +9,23 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
     local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-    local out = vim.fn.system({ "git", "clone", "--filter=blob:none", lazyrepo, "--branch=stable", lazypath })
-    if vim.v.shell_error ~= 0 then
-        vim.api.nvim_echo({
-            { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-            { out,                            "WarningMsg" },
-            { "\nPress any key to exit..." },
-        }, true, {})
-        vim.fn.getchar()
-        os.exit(1)
-    end
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "--branch=stable",
+        lazyrepo,
+        lazypath,
+    })
 end
 vim.opt.rtp:prepend(lazypath)
 
 -- Setup Lazy.nvim with plugins
 require("lazy").setup({
     { import = "plugins" },
-    { "folke/neoconf.nvim", cmd = "Neoconf" },
+    { "folke/neoconf.nvim",         cmd = "Neoconf" },
     { "folke/neodev.nvim" },
+    { "nvim-tree/nvim-web-devicons" }
 }, {
     performance = {
         rtp = {
@@ -39,5 +38,20 @@ require("lazy").setup({
                 "zipPlugin",
             },
         },
+        cache = {
+            enabled = true,
+            path = vim.fn.stdpath("cache") .. "/lazy/cache",
+            -- Don't cache files larger than 100kb
+            size = 100 * 1024,
+        },
     },
+    change_detection = {
+        notify = false,
+    },
+    ui = {
+        border = "rounded",
+    },
+    -- install = {
+    --     -- colorscheme = { "tokyonight", "habamax" },
+    -- },
 })

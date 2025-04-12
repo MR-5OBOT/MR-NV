@@ -11,8 +11,9 @@ local opts = { noremap = true, silent = true }
 local keymap = vim.keymap.set
 -- local map = vim.api.nvim_set_keymap
 
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+-- now it's used on init.lua
+-- vim.g.mapleader = " "
+-- vim.g.maplocalleader = " "
 
 keymap("i", "jk", "<ESC>", opts)                    -- Press jk fast to exit insert mode
 keymap("n", "<Enter>", "<cmd>nohlsearch<CR>", opts) -- Clear search
