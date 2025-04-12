@@ -43,6 +43,3 @@ local function run_python_in_tmux()
 end
 
 vim.keymap.set("n", "<leader>rp", run_python_in_tmux, { desc = "Run current Python file in right tmux split" })
-
--- Set the keymap
-vim.keymap.set("n", "<leader>rp", run_python_in_tmux, { desc = "Run Python in tmux pane (right)" })
