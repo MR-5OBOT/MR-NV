@@ -35,6 +35,18 @@ return {
                         vim.diagnostic.goto_next({ float = { border = "rounded" } })
                     end, -- Next diagnostic
                 }
+                local diagnostics_enabled = true
+                vim.keymap.set("n", "<leader>dx", function()
+                    diagnostics_enabled = not diagnostics_enabled
+                    if diagnostics_enabled then
+                        vim.diagnostic.enable()
+                        print("🔔 Diagnostics Enabled")
+                    else
+                        vim.diagnostic.disable()
+                        print("🔕 Diagnostics Disabled")
+                    end
+                end, { desc = "Toggle LSP Diagnostics" })
+
                 for k, v in pairs(keymaps) do
                     vim.keymap.set("n", k, v, opts)
                 end
