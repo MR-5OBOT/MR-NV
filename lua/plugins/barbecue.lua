@@ -19,6 +19,7 @@ return {
             "packer",                    -- Packer buffers
             "fugitive",                  -- Fugitive buffers (if you're using fugitive plugin)
             "NvimTree", "mason",         -- Mason and NvimTree
+            "conf",                      -- Configuration files
             "startify",                  -- Startify buffers
         },
     },

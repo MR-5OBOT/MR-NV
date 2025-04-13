@@ -46,6 +46,7 @@ opt.cursorline = true         -- Highlight current line
 opt.fileencoding = "utf-8"    -- File encoding
 vim.opt.encoding = "utf-8"
 opt.showtabline = 0           -- Disable tabline
+opt.laststatus = 0
 opt.smartindent = true        -- Enable smart indentation
 
 -- Modern conveniences
