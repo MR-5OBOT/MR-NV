@@ -56,6 +56,11 @@ return {
             local function on_attach(client, bufnr)
                 set_keymaps(bufnr)
 
+                -- disable formatting from LSPs we don't want formatting
+                if client.name == "pyright" or client.name == "tsserver" then
+                    client.server_capabilities.documentFormattingProvider = false
+                end
+
                 if client.server_capabilities.documentFormattingProvider then
                     vim.api.nvim_create_autocmd("BufWritePre", {
                         buffer = bufnr,
