@@ -17,6 +17,7 @@ return {
                     "shfmt",
                     "ruff",
                 },
+                automatic_installation = true
             })
 
             local function skip_large_files()
