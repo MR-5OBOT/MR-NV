@@ -11,7 +11,7 @@ return {
         local actions = require('telescope.actions')
         require('telescope').setup({
             defaults = {
-                file_ignore_patterns = { '^.git/', '^node_modules/', '^.DS_Store', '%.lock' },
+                file_ignore_patterns = { '^.git/', '^node_modules/', '^.DS_Store', '%.lock', '^env/', '^.env/' },
                 sorting_strategy = 'ascending',
                 layout_strategy = 'horizontal',
                 layout_config = {

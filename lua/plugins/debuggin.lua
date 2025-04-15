@@ -13,13 +13,15 @@ return {
 
             require("dapui").setup({})
             require("nvim-dap-virtual-text").setup({
-                commented = true, -- Show virtual text alongside comment
-                all_frames = true, -- Show virtual text for all frames (function calls)
+                commented = true,      -- Show virtual text alongside comment
+                all_frames = true,     -- Show virtual text for all frames (function calls)
                 virt_text_pos = "eol", -- Position of virtual text (at the end of line)
             })
 
             -- Python debugging setup
-            require("dap-python").setup("/usr/bin/python3")
+            -- require("dap-python").setup("/usr/bin/python3")
+            local mason_path = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python"
+            require("dap-python").setup(mason_path)
 
             vim.fn.sign_define("DapBreakpoint", {
                 text = "",
