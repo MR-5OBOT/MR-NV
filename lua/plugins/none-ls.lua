@@ -13,40 +13,41 @@ return {
             mason_null_ls.setup({
                 ensure_installed = {
                     "prettier",
-                    "black",
                     "stylua",
                     "shfmt",
-                    "eslint_d",
-                    "flake8",
+                    "ruff",
                 },
             })
 
             local function skip_large_files()
                 local file_path = vim.api.nvim_buf_get_name(0)
-                return vim.fn.getfsize(file_path) < 100000 -- Skip files larger than 100KB
+                return vim.fn.getfsize(file_path) < 100000 -- 100KB limit
             end
 
             null_ls.setup({
                 sources = {
-                    -- ✅ Formatters
-                    null_ls.builtins.formatting.prettier.with({
-                        condition = skip_large_files,
-                    }),
-                    null_ls.builtins.formatting.black.with({
+                    -- ✅ Python via Ruff (linter + formatter)
+                    null_ls.builtins.formatting.ruff.with({
                         condition = skip_large_files,
                         extra_args = { "--line-length", "135" },
                     }),
+
+                    -- ✅ Lua
                     null_ls.builtins.formatting.stylua.with({
                         condition = skip_large_files,
-                        extra_args = { "--line-length", "140" },
                     }),
+
+                    -- ✅ Shell
                     null_ls.builtins.formatting.shfmt.with({
                         condition = skip_large_files,
                     }),
-                    null_ls.builtins.formatting.isort.with({
+
+                    -- ✅ Web
+                    null_ls.builtins.formatting.prettier.with({
                         condition = skip_large_files,
                     }),
                 },
+
                 on_attach = function(client, bufnr)
                     if client.supports_method("textDocument/formatting") then
                         local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
@@ -56,7 +57,7 @@ return {
                             buffer = bufnr,
                             callback = function()
                                 vim.lsp.buf.format({
-                                    async = false,
+                                    async = true,
                                     filter = function(c)
                                         return c.name == "null-ls"
                                     end,
