@@ -31,7 +31,7 @@ keymap("v", "K", ":m '<-2<CR>gv=gv")                                            
 keymap("n", "j", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { expr = true }) -- Allow moving the cursor through wrapped lines
 keymap("n", "k", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true }) -- Allow moving the cursor through wrapped lines
 
-keymap("n", "<leader>e", ":Explore<CR>", { noremap = true, silent = true })
+-- keymap("n", "<leader>e", ":Explore<CR>", { noremap = true, silent = true })
 
 
 local function run_python_in_tmux()
