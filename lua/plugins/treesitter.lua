@@ -1,7 +1,7 @@
 return {
-  'nvim-treesitter/nvim-treesitter',
+  "nvim-treesitter/nvim-treesitter",
   config = function()
-    require 'nvim-treesitter.configs'.setup {
+    require("nvim-treesitter.configs").setup({
       ensure_installed = {
         "bash",
         "html",
@@ -16,10 +16,10 @@ return {
         "typescript",
         "vim",
         "yaml",
-        "hyprlang"
+        "hyprlang",
       },
       sync_install = true,
-      auto_install = true,
+      -- auto_install = true,
       highlight = {
         enable = true,
         additional_vim_regex_highlighting = { "markdown" },
@@ -27,7 +27,7 @@ return {
       -- the following code snippet for automatic filetype detection for hyprland configs
       vim.filetype.add({
         pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
-      })
-    }
-  end
+      }),
+    })
+  end,
 }

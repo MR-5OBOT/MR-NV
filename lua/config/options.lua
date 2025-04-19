@@ -18,6 +18,7 @@ opt.foldminlines = 1 -- Fold even single line
 opt.foldnestmax = 20 -- Maximum nesting level
 opt.foldtext = "" -- Don't show fold text
 opt.foldignore = "" -- Don't ignore anything when folding
+vim.opt.breakindent = true
 
 -- Existing options
 opt.clipboard = "unnamedplus" -- Use system clipboard
