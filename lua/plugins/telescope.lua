@@ -21,6 +21,7 @@ return {
           "^env/",
           "^.env/",
         },
+        hidden = true,
         sorting_strategy = "ascending",
         layout_strategy = "horizontal",
         layout_config = {
@@ -37,7 +38,7 @@ return {
         borderchars = { " ", " ", " ", " ", " ", " ", " ", " " },
         results_title = false,
         preview_title = false,
-        winblend = 10,
+        winblend = 0,
         mappings = {
           i = {
             ["<C-j>"] = actions.move_selection_next,
@@ -50,6 +51,7 @@ return {
       pickers = {
         find_files = {
           theme = "dropdown",
+          hidden = true,
           previewer = true,
           layout_config = {
             width = 0.5,

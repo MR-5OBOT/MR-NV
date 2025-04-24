@@ -7,7 +7,7 @@ opt.timeoutlen = 300 -- Faster key sequence completion
 opt.redrawtime = 1500 -- Allow more time for loading syntax
 opt.synmaxcol = 240 -- Only highlight the first 240 columns
 opt.maxmempattern = 2000 -- Increase the max memory for pattern matching
-opt.foldmethod = "indent" -- Faster folding
+opt.foldmethod = "manual" -- you can go lighter than 'indent'
 opt.foldlevelstart = 99 -- Don't fold by default
 opt.foldenable = false -- Disable folding by default
 opt.foldcolumn = "0" -- Don't show fold column
@@ -29,7 +29,6 @@ opt.autoindent = true -- Auto-indent new lines
 opt.shiftwidth = 4 -- Indentation level
 opt.tabstop = 4 -- Tab width
 opt.expandtab = true -- Use spaces instead of tabs
-opt.showtabline = 2 -- display tab line
 opt.ignorecase = true -- Ignore case in search
 opt.smartcase = true -- Enable smart case search
 opt.hlsearch = true -- Highlight search matches
@@ -60,8 +59,8 @@ opt.wildignorecase = true -- Ignore case in wild menu
 opt.pumheight = 8 -- Maximum number of items in completion menu
 
 -- Disable built-in plugins
-vim.g.loaded_netrw = 1 -- Disable Netrw
-vim.g.loaded_netrwPlugin = 1 -- Disable Netrw plugin
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 vim.g.loaded_2html_plugin = 1
 vim.g.loaded_getscript = 1
 vim.g.loaded_gzip = 1

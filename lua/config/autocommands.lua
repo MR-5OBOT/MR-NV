@@ -7,17 +7,23 @@ vim.cmd("autocmd BufEnter * setlocal formatoptions-=cro")
 
 -- return to last edit position when opening files
 vim.api.nvim_create_autocmd("BufReadPost", {
-	pattern = "*",
-	callback = function()
-		if vim.fn.line("'\"") > 0 and vim.fn.line("'\"") <= vim.fn.line("$") then
-			vim.cmd('normal! g`"')
-		end
-	end,
+  pattern = "*",
+  callback = function()
+    if vim.fn.line("'\"") > 0 and vim.fn.line("'\"") <= vim.fn.line("$") then
+      vim.cmd('normal! g`"')
+    end
+  end,
 })
 
 -- Default yank highlight
 vim.api.nvim_create_autocmd("TextYankPost", {
-	callback = function()
-		vim.highlight.on_yank()
-	end,
+  callback = function()
+    vim.highlight.on_yank()
+  end,
 })
+
+-- autoave
+vim.defer_fn(function()
+  vim.cmd("silent! wa")
+  vim.defer_fn(vim.fn["repeat"], 300000)
+end, 300000)
