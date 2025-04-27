@@ -25,5 +25,11 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 -- autoave
 vim.defer_fn(function()
   vim.cmd("silent! wa")
-  vim.defer_fn(vim.fn["repeat"], 300000)
-end, 300000)
+  vim.defer_fn(vim.fn["repeat"], 100000)
+end, 100000)
+
+--  open man, help in a split win on the right
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "help", "man" },
+  command = "wincmd L",
+})
