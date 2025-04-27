@@ -19,3 +19,6 @@ require("config.lazy-cfg")
 require("config.keymaps")
 -- Load autocommands last
 require("config.autocommands")
+
+-- load custom plugins
+require("custom-plugins")
