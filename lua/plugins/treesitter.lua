@@ -1,5 +1,6 @@
 return {
   "nvim-treesitter/nvim-treesitter",
+  build = ":TSUpdate", -- (optional) auto-update parsers on install
   config = function()
     require("nvim-treesitter.configs").setup({
       ensure_installed = {
@@ -36,9 +37,11 @@ return {
         additional_vim_regex_highlighting = { "markdown" },
       },
       indent = { enable = true },
-      vim.filetype.add({
-        pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
-      }),
+    })
+
+    -- hyprlang filetype
+    vim.filetype.add({
+      pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
     })
   end,
 }
