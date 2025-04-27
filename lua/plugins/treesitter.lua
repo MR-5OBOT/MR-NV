@@ -17,14 +17,25 @@ return {
         "vim",
         "yaml",
         "hyprlang",
+        "toml",
+        "regex",
+        "query",
+        "vimdoc",
       },
       sync_install = true,
-      -- auto_install = true,
+      auto_install = true,
       highlight = {
         enable = true,
+        disable = function(lang, buf)
+          local max_filesize = 100 * 1024 -- 100 KB
+          local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+          if ok and stats and stats.size > max_filesize then
+            return true
+          end
+        end,
         additional_vim_regex_highlighting = { "markdown" },
       },
-      -- the following code snippet for automatic filetype detection for hyprland configs
+      indent = { enable = true },
       vim.filetype.add({
         pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
       }),
