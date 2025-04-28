@@ -1,46 +1,63 @@
 return {
   "neovim/nvim-lspconfig",
-  event = { "BufReadPre", "BufNewFile" },
+  -- event = { "BufReadPre", "BufNewFile" },
+  event = { "BufReadPost", "BufWritePost" }, -- Load after buffer is read
   dependencies = {
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
     "hrsh7th/cmp-nvim-lsp",
+    "folke/neodev.nvim",
   },
   config = function()
+    require("neodev").setup()
+
     local lspconfig = require("lspconfig")
     local cmp_lsp = require("cmp_nvim_lsp")
     local capabilities = cmp_lsp.default_capabilities()
 
-    -- Diagnostics configuration
     vim.diagnostic.config({
       virtual_text = { prefix = "●", spacing = 2 },
       float = { border = "rounded", max_width = 80 },
-      signs = { text = { "", "", "", "󰌵" } },
+      signs = {
+        text = {
+          [vim.diagnostic.severity.ERROR] = "",
+          [vim.diagnostic.severity.WARN] = "",
+          [vim.diagnostic.severity.INFO] = "",
+          [vim.diagnostic.severity.HINT] = "󰌵",
+        },
+      },
       underline = true,
       update_in_insert = false,
       severity_sort = true,
     })
 
-    -- Shared on_attach
     local function on_attach(client, bufnr)
       client.server_capabilities.documentFormattingProvider = false
-      vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-      local opts = { buffer = bufnr }
+      client.server_capabilities.documentRangeFormattingProvider = false
+      if client.supports_method("textDocument/inlayHint") then
+        vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+      end
+      local opts = { buffer = bufnr, silent = true }
       vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
       vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
       vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-      vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-      vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
       vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
       vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
       vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+      vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+      vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
     end
 
-    -- LSP servers with minimal settings
     local servers = {
       pyright = {
         settings = {
-          python = { analysis = { diagnosticSeverityOverrides = { reportLineLength = "none" } } },
+          python = {
+            analysis = {
+              diagnosticSeverityOverrides = {
+                reportLineLength = "none",
+              },
+            },
+          },
         },
       },
       lua_ls = {
@@ -49,8 +66,21 @@ return {
             runtime = { version = "LuaJIT" },
             diagnostics = { globals = { "vim" } },
             workspace = {
-              library = { vim.fn.stdpath("config") .. "/lua" },
+              library = {
+                -- Only include specific directories you need
+                vim.fn.expand("$VIMRUNTIME/lua"),
+                vim.fn.stdpath("config") .. "/lua",
+              },
+              maxPreload = 1000, -- Limit maximum files to preload
+              preloadFileSize = 150,
               checkThirdParty = false,
+              ignoreDir = {
+                "node_modules",
+                ".git",
+                "target",
+                "build",
+                "vendor",
+              },
             },
             hint = { enable = true },
           },
@@ -61,15 +91,14 @@ return {
       cssls = {},
     }
 
-    -- Setup servers via mason-lspconfig
     require("mason-lspconfig").setup({
-      ensure_installed = { "pyright", "lua_ls", "ts_ls", "html", "cssls" },
+      automatic_installation = true,
       handlers = {
-        function(server)
-          lspconfig[server].setup({
+        function(server_name)
+          lspconfig[server_name].setup({
             capabilities = capabilities,
             on_attach = on_attach,
-            settings = servers[server] and servers[server].settings or {},
+            settings = servers[server_name] and servers[server_name].settings or {},
           })
         end,
       },
