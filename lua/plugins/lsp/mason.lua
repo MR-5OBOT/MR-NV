@@ -22,11 +22,11 @@ return {
     require("mason-tool-installer").setup({
       ensure_installed = {
         -- LSP servers
-        "pyright",
-        "lua_ls",
-        "ts_ls",
-        "html",
-        "cssls",
+        -- "pyright",
+        -- "lua_ls",
+        -- "ts_ls",
+        -- "html",
+        -- "cssls",
         -- Formatters
         "prettier",
         "black",
