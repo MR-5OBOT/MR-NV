@@ -1,13 +1,9 @@
 return {
   "neovim/nvim-lspconfig",
   dependencies = {
-    -- LSP Support
-    "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
     "WhoIsSethDaniel/mason-tool-installer.nvim",
-    -- Formatting
     "stevearc/conform.nvim",
-    -- Autocompletion
     "hrsh7th/nvim-cmp",
     "hrsh7th/cmp-nvim-lsp",
     "L3MON4D3/LuaSnip",
@@ -17,21 +13,21 @@ return {
     require("mason").setup()
     require("mason-lspconfig").setup({
       ensure_installed = {
-        "lua_ls", -- Lua
-        "pyright", -- Python
-        "bashls", -- Bash
-        "html", -- HTML
-        "cssls", -- CSS
-        "ts_ls", -- JavaScript/TypeScript
+        "lua_ls",
+        "pyright",
+        "bashls",
+        "html",
+        "cssls",
+        -"ts_ls",
       },
     })
     -- Ensure formatters are installed via mason-tool-installer
     require("mason-tool-installer").setup({
       ensure_installed = {
-        "stylua", -- Lua formatter
-        "black", -- Python formatter
-        "shfmt", -- Bash formatter
-        "prettier", -- HTML, CSS, JavaScript, TypeScript formatter
+        "stylua",
+        "black",
+        "shfmt",
+        "prettier",
       },
       auto_update = true,
       run_on_start = true,
@@ -49,14 +45,14 @@ return {
         header = "",
         prefix = "",
         focusable = false,
-        scope = "cursor", -- Show diagnostics for the current cursor position
+        scope = "cursor",
       },
       signs = {
         text = {
-          [vim.diagnostic.severity.ERROR] = "", -- Nerd Font icon for errors
-          [vim.diagnostic.severity.WARN] = "", -- Nerd Font icon for warnings
-          [vim.diagnostic.severity.INFO] = "", -- Nerd Font icon for info
-          [vim.diagnostic.severity.HINT] = "", -- Nerd Font icon for hints
+          [vim.diagnostic.severity.ERROR] = "",
+          [vim.diagnostic.severity.WARN] = "",
+          [vim.diagnostic.severity.INFO] = "",
+          [vim.diagnostic.severity.HINT] = "",
         },
       },
     })
@@ -79,11 +75,11 @@ return {
         lsp_settings.settings = {
           Lua = {
             diagnostics = {
-              globals = { "vim" }, -- Explicitly ignore vim
+              globals = { "vim" },
             },
             workspace = { checkThirdParty = false },
             telemetry = { enable = false },
-            hint = { enable = true }, -- Inlay hints
+            hint = { enable = true },
           },
         }
       elseif lsp == "pyright" then
@@ -93,8 +89,8 @@ return {
               inlayHints = {
                 variableTypes = true,
                 functionReturnTypes = true,
-                callArgumentTypes = true, -- Show parameter type hints
-                parameterNames = true, -- Show parameter names in calls
+                callArgumentTypes = true,
+                parameterNames = true,
               },
               typeCheckingMode = "basic",
               -- typeCheckingMode = "strict",
@@ -105,12 +101,6 @@ return {
                 reportUnusedImport = "information", -- or "none" to suppress
               },
             },
-          },
-        }
-      elseif lsp == "bashls" then
-        lsp_settings.settings = {
-          bashIde = {
-            inlayHints = true,
           },
         }
       elseif lsp == "html" then
@@ -166,7 +156,7 @@ return {
         vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
         vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
         vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-        vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts) -- Manual diagnostics float
+        vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
       end,
     })
   end,
