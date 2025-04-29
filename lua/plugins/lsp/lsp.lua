@@ -1,3 +1,4 @@
+-- LSP Configuration
 return {
   "neovim/nvim-lspconfig",
   dependencies = {
@@ -18,20 +19,19 @@ return {
     require("mason-lspconfig").setup({
       ensure_installed = {
         "lua_ls",
-        "pyright",
+        "basedpyright", -- Replaced pyright with basedpyright
+        "ruff", -- Added for linting and formatting
         "bashls",
         "html",
         "cssls",
         "ts_ls",
       },
     })
-    -- Ensure formatters are installed via mason-tool-installer
+    -- Ensure formatters and linters are installed
     require("mason-tool-installer").setup({
       ensure_installed = {
         "stylua",
-        "black",
-        "shfmt",
-        "prettier",
+        "ruff", -- Replaced black, isort, shfmt, prettier
       },
       auto_update = true,
       run_on_start = true,
@@ -63,14 +63,19 @@ return {
 
     -- LSP server configurations
     local lspconfig = require("lspconfig")
-    local servers = { "lua_ls", "pyright", "bashls", "html", "cssls", "ts_ls" }
+    local servers = { "lua_ls", "basedpyright", "ruff", "bashls", "html", "cssls", "ts_ls" }
     for _, lsp in ipairs(servers) do
       local lsp_settings = {
         capabilities = capabilities,
         on_attach = function(client, bufnr)
-          -- Ensure inlay hints are enabled for this client
+          -- Enable inlay hints if supported
           if client.server_capabilities.inlayHintProvider then
             vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+          end
+          -- Disable formatting for basedpyright to avoid conflicts with ruff
+          if lsp == "basedpyright" then
+            client.server_capabilities.documentFormattingProvider = false
+            client.server_capabilities.documentRangeFormattingProvider = false
           end
         end,
       }
@@ -78,47 +83,44 @@ return {
       if lsp == "lua_ls" then
         lsp_settings.settings = {
           Lua = {
-            diagnostics = {
-              globals = { "vim" },
-            },
+            diagnostics = { globals = { "vim" } },
             workspace = { checkThirdParty = false },
             telemetry = { enable = false },
             hint = { enable = true },
           },
         }
-      elseif lsp == "pyright" then
+      elseif lsp == "basedpyright" then
         lsp_settings.settings = {
-          python = {
+          basedpyright = {
             analysis = {
+              autoSearchPaths = true,
+              useLibraryCodeForTypes = true,
+              diagnosticMode = "openFilesOnly", -- Faster for large projects
               inlayHints = {
                 variableTypes = true,
                 functionReturnTypes = true,
-                callArgumentTypes = true,
-                parameterNames = true,
+                callArgumentNames = true,
               },
-              typeCheckingMode = "basic",
-              -- typeCheckingMode = "strict",
-              diagnosticMode = "workspace",
-              autoSearchPaths = true,
-              useLibraryCodeForTypes = true,
-              diagnosticSeverityOverrides = {
-                reportUnusedImport = "information", -- or "none" to suppress
-              },
+              typeCheckingMode = "standard", -- Balanced type checking
             },
           },
         }
+      elseif lsp == "ruff" then
+        lsp_settings.on_attach = function(client, bufnr)
+          -- Disable hover to defer to basedpyright
+          client.server_capabilities.hoverProvider = false
+          -- Enable inlay hints if supported
+          if client.server_capabilities.inlayHintProvider then
+            vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+          end
+        end
       elseif lsp == "html" then
         lsp_settings.settings = {
-          html = {
-            inlayHints = true,
-          },
+          html = { inlayHints = true },
         }
       elseif lsp == "cssls" then
         lsp_settings.settings = {
-          css = {
-            lint = { unknownAtRules = "ignore" },
-            inlayHints = true,
-          },
+          css = { lint = { unknownAtRules = "ignore" }, inlayHints = true },
         }
       elseif lsp == "ts_ls" then
         lsp_settings.settings = {
@@ -160,7 +162,7 @@ return {
         vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
         vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
         vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-        vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts) -- Manual diagnostics float
+        vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
       end,
     })
   end,

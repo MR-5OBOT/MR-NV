@@ -8,18 +8,21 @@ return {
         typescript = { "prettier" },
         html = { "prettier" },
         css = { "prettier" },
-        python = { "black", "isort" },
+        python = { "ruff_format", "ruff_organize_imports" }, -- Replaced black, isort with ruff
         lua = { "stylua" },
         sh = { "shfmt" },
         ["*"] = { "trim_whitespace" },
       },
       format_on_save = {
-        timeout_ms = 500,
+        timeout_ms = 1000,
         lsp_fallback = false,
+        sync = true, -- Ensure synchronous formatting to avoid interruptions
       },
       formatters = {
-        black = { prepend_args = { "--line-length", "120" } },
-        isort = { prepend_args = { "--profile", "black" } },
+        ruff_format = {
+          prepend_args = { "--quiet" },
+        },
+        ruff_organize_imports = {},
         stylua = {
           prepend_args = {
             "--indent-type",

@@ -24,6 +24,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
   { import = "plugins" },
   { import = "plugins.lsp" },
+  { import = "plugins.helpers" },
   { "folke/neoconf.nvim", cmd = "Neoconf" },
   { "folke/neodev.nvim" },
   { "nvim-tree/nvim-web-devicons" },
