@@ -22,12 +22,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   end,
 })
 
--- autoave
-vim.defer_fn(function()
-  vim.cmd("silent! wa")
-  vim.defer_fn(vim.fn["repeat"], 100000)
-end, 100000)
-
 --  open man, help in a split win on the right
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "help", "man" },
