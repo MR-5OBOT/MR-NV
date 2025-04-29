@@ -1,9 +1,13 @@
 return {
   "neovim/nvim-lspconfig",
   dependencies = {
+    -- LSP Support
+    "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
     "WhoIsSethDaniel/mason-tool-installer.nvim",
+    -- Formatting
     "stevearc/conform.nvim",
+    -- Autocompletion
     "hrsh7th/nvim-cmp",
     "hrsh7th/cmp-nvim-lsp",
     "L3MON4D3/LuaSnip",
@@ -18,7 +22,7 @@ return {
         "bashls",
         "html",
         "cssls",
-        -"ts_ls",
+        "ts_ls",
       },
     })
     -- Ensure formatters are installed via mason-tool-installer
@@ -156,7 +160,7 @@ return {
         vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
         vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
         vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-        vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
+        vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts) -- Manual diagnostics float
       end,
     })
   end,
