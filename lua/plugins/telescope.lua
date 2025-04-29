@@ -52,7 +52,7 @@ return {
         find_files = {
           theme = "dropdown",
           hidden = true,
-          previewer = true,
+          previewer = false,
           layout_config = {
             width = 0.5,
             height = 0.4,
@@ -121,13 +121,9 @@ return {
     map("n", "<leader>,", builtin.buffers, { desc = "List Buffers" })
     map("n", "<leader>fg", builtin.live_grep, { desc = "Live Grep" })
     map("n", "<leader>fh", builtin.help_tags, { desc = "Help Tags" })
-    map("n", "<leader>fd", builtin.diagnostics, { desc = "Diagnostics" })
     map("n", "<leader>/", builtin.current_buffer_fuzzy_find, { desc = "Fuzzy Find in Buffer" })
     map("n", "<leader>fk", builtin.keymaps, { desc = "Keymaps" })
     map("n", "<leader>fc", builtin.commands, { desc = "Commands" })
-
-    -- LazyGit shortcut (optional)
-    -- map("n", "<leader>gg", "<cmd>LazyGit<cr>", { desc = "LazyGit" })
 
     -- Clean UI colors for Monochrome
     vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = "NONE" })
