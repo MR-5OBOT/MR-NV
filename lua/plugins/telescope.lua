@@ -63,7 +63,7 @@ return {
           previewer = false,
           sort_lastused = true,
           layout_config = {
-            width = 0.3,
+            width = 0.4,
             height = 0.4,
           },
         },

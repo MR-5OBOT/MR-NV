@@ -38,6 +38,7 @@ opt.scrolloff = 8 -- Lines to keep above/below the cursor
 opt.sidescrolloff = 8 -- Columns to keep left/right of the cursor
 opt.backup = false -- Disable backups
 opt.undofile = true -- Enable persistent undo
+-- opt.inccommand = "split" -- split find and replace
 opt.swapfile = false
 opt.history = 50 -- Increased command history size
 opt.linebreak = true -- Don't split words when wrapping
