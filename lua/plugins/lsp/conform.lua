@@ -27,7 +27,7 @@ return {
             "--indent-width",
             "2",
             "--column-width",
-            "100",
+            "120",
           },
         },
       },
