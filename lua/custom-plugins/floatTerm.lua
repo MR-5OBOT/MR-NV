@@ -45,6 +45,7 @@ function M.toggle_terminal()
     state.floating = create_floating_window({ buf = state.floating.buf })
     if vim.bo[state.floating.buf].buftype ~= "terminal" then
       vim.cmd.terminal()
+      vim.cmd("startinsert") -- Start insert mode in the terminal window
     end
   else
     vim.api.nvim_win_hide(state.floating.win)
