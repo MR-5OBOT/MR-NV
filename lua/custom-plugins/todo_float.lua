@@ -12,7 +12,7 @@ end
 local M = {}
 
 local function float_win_config()
-  local width = math.min(math.floor(vim.o.columns * 0.8), 64)
+  local width = math.min(math.floor(vim.o.columns * 0.8), 70)
   local height = math.floor(vim.o.lines * 0.8)
 
   return {
@@ -21,7 +21,7 @@ local function float_win_config()
     height = height,
     col = Center_in(vim.o.columns, width),
     row = Center_in(vim.o.lines, height),
-    border = "single",
+    border = "rounded",
   }
 end
 
