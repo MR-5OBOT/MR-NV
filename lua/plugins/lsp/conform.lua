@@ -22,7 +22,7 @@ return {
         ruff_format = {
           prepend_args = {
             "--quiet",
-            "format", -- Explicitly specify the format subcommand
+            "format",
             "--line-length",
             "120",
           },
@@ -37,9 +37,9 @@ return {
             "--indent-type",
             "Spaces",
             "--indent-width",
-            "2",
+            "4",
             "--column-width",
-            "120",
+            "130",
           },
         },
       },
