@@ -1,4 +1,3 @@
--- Neovim options for a fast, rich, and modern setup
 local opt = vim.opt
 
 -- Performance
@@ -10,7 +9,7 @@ opt.synmaxcol = 240 -- Limit syntax highlighting to 240 columns
 -- UI Essentials
 opt.number = true -- Line numbers
 opt.relativenumber = true -- Relative line numbers
-opt.termguicolors = true -- True color support (for lspsaga.nvim, themes)
+opt.termguicolors = true -- True color support
 opt.cursorline = true -- Highlight current line
 opt.signcolumn = "yes" -- Always show sign column for LSP diagnostics
 opt.scrolloff = 8 -- Keep 8 lines visible above/below cursor
