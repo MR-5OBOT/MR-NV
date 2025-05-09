@@ -7,15 +7,16 @@ return {
     },
     event = "VeryLazy",
     keys = {
-        { "<leader>e", ":Neotree toggle float<CR>", desc = "Toggle Float File Explorer", silent = true },
+        { "<leader>e", ":Neotree toggle float<CR>", silent = true, desc = "Float File Explorer" },
     },
     config = function()
-        require("nvim-web-devicons").setup()
+        require("nvim-web-devicons").setup() -- Initialize nvim-web-devicons
 
         require("neo-tree").setup({
             close_if_last_window = true,
             popup_border_style = "single",
             enable_git_status = true,
+            enable_modified_markers = true,
             enable_diagnostics = true,
             sort_case_insensitive = true,
             default_component_configs = {
@@ -23,17 +24,15 @@ return {
                     with_markers = true,
                     with_expanders = true,
                 },
-                icon = {
-                    folder_closed = "",
-                    folder_open = "",
-                    folder_empty = "",
-                    folder_empty_open = "",
-                    default = "",
-                    highlight = "NeoTreeFileIcon",
-                },
                 modified = {
                     symbol = "●",
                     highlight = "NeoTreeModified",
+                },
+                icon = {
+                    folder_closed = "",
+                    folder_open = "",
+                    folder_empty = "",
+                    folder_empty_open = "",
                 },
                 git_status = {
                     symbols = {
@@ -52,37 +51,19 @@ return {
             window = {
                 position = "float",
                 width = 35,
-                mappings = {
-                    ["<space>"] = "toggle_node",
-                    ["<cr>"] = "open",
-                    ["o"] = "open",
-                    ["a"] = "add",
-                    ["d"] = "delete",
-                    ["r"] = "rename",
-                    ["c"] = "copy",
-                    ["x"] = "cut",
-                    ["p"] = "paste",
-                    ["q"] = "close_window",
-                },
             },
             filesystem = {
-                follow_current_file = { enabled = true },
                 use_libuv_file_watcher = true,
                 filtered_items = {
                     hide_dotfiles = false,
                     hide_gitignored = false,
-                    hide_by_name = { "node_modules" },
-                    hide_by_pattern = { "*.pyc", "__pycache__" },
-                    never_show = { ".DS_Store", "thumbs.db" },
-                },
-            },
-            buffers = {
-                follow_current_file = true,
-                group_empty_dirs = true,
-            },
-            git_status = {
-                window = {
-                    position = "float",
+                    hide_by_name = {
+                        "node_modules",
+                    },
+                    never_show = {
+                        ".DS_Store",
+                        "thumbs.db",
+                    },
                 },
             },
             event_handlers = {
