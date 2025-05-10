@@ -23,6 +23,9 @@ return {
             return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
         end
 
+        -- Define a softer highlight for the selected item
+        vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#333333", fg = "#d0d0d0", bold = false })
+
         cmp.setup({
             snippet = {
                 expand = function(args)
