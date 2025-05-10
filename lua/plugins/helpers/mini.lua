@@ -8,7 +8,7 @@ return {
       -- require("mini.animate").setup()
       require("mini.indentscope").setup()
       require("mini.pairs").setup()
-      require("mini.statusline").setup({ use_icons = true })
+      -- require("mini.statusline").setup({ use_icons = true })
       -- require("mini.notify").setup()
     end,
   },

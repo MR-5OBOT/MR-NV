@@ -12,8 +12,8 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 require("config.options")
-require("config.lazy-cfg")
 require("config.keymaps")
+require("config.lazy-cfg")
 -- require("config.autocommands")
 
 local ag = vim.api.nvim_create_augroup
@@ -25,23 +25,17 @@ vim.cmd("autocmd BufEnter * setlocal formatoptions-=cro")
 
 -- return to last edit position when opening files
 vim.api.nvim_create_autocmd("BufReadPost", {
-	pattern = "*",
-	callback = function()
-		if vim.fn.line("'\"") > 0 and vim.fn.line("'\"") <= vim.fn.line("$") then
-			vim.cmd('normal! g`"')
-		end
-	end,
+    pattern = "*",
+    callback = function()
+        if vim.fn.line("'\"") > 0 and vim.fn.line("'\"") <= vim.fn.line("$") then
+            vim.cmd('normal! g`"')
+        end
+    end,
 })
 
 -- Default yank highlight
 vim.api.nvim_create_autocmd("TextYankPost", {
-	callback = function()
-		vim.highlight.on_yank()
-	end,
-})
-
---  open man, help in a split win on the right
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = { "help", "man" },
-	command = "wincmd L",
+    callback = function()
+        vim.highlight.on_yank()
+    end,
 })

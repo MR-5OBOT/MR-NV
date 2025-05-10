@@ -22,16 +22,14 @@ return {
                     "^.env/",
                 },
                 hidden = true,
-                sorting_strategy = "ascending",
-                layout_strategy = "horizontal",
-                layout_config = {
-                    horizontal = {
-                        prompt_position = "top",
-                        width = 0.6,
-                        height = 0.8,
-                        preview_width = 0.5,
-                    },
-                },
+                -- layout_config = {
+                --     horizontal = {
+                --         prompt_position = "bottom",
+                --         width = 0.5,
+                --         height = 0.8,
+                --         preview_width = 0.5,
+                --     },
+                -- },
                 prompt_prefix = "   ",
                 selection_caret = " ",
                 entry_prefix = "  ",
@@ -50,12 +48,12 @@ return {
             },
             pickers = {
                 find_files = {
-                    theme = "dropdown",
+                    -- theme = "dropdown",
                     hidden = true,
                     previewer = true,
                     layout_config = {
-                        width = 0.5,
-                        height = 0.4,
+                        width = 0.7,
+                        height = 0.6,
                     },
                 },
                 buffers = {
