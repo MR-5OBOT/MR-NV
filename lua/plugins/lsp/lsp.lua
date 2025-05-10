@@ -50,20 +50,6 @@ return {
 				keymap("n", "<leader>q", vim.diagnostic.setloclist, opts)
 			end
 
-			local function get_python_path()
-				local venv_path = os.getenv("VIRTUAL_ENV")
-				if venv_path then
-					return venv_path .. "/bin/python3"
-				else
-					return "/usr/bin/python3"
-				end
-			end
-
-			lspconfig.bashls.setup({
-				capabilities = capabilities,
-				on_attach = on_attach,
-			})
-
 			lspconfig.lua_ls.setup({
 				capabilities = capabilities,
 				on_attach = on_attach,
@@ -85,6 +71,11 @@ return {
 				},
 			})
 
+			lspconfig.bashls.setup({
+				capabilities = capabilities,
+				on_attach = on_attach,
+			})
+
 			lspconfig.cssls.setup({
 				capabilities = capabilities,
 				on_attach = on_attach,
@@ -103,11 +94,7 @@ return {
 			lspconfig.pylsp.setup({
 				capabilities = capabilities,
 				on_attach = on_attach,
-				settings = {
-					python = {
-						pythonPath = get_python_path(),
-					},
-				},
+				settings = {},
 			})
 		end,
 	},
