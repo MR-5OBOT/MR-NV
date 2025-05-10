@@ -3,7 +3,7 @@
         "vim"
     ],
     "diagnostics.disable": [
-        "deprecated",
-        "undefined-field"
+        "missing-fields",
+        "deprecated"
     ]
 }
