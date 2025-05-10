@@ -7,15 +7,8 @@ return {
         "hrsh7th/cmp-path",
         "hrsh7th/cmp-cmdline",
         "saadparwaiz1/cmp_luasnip",
-        {
-            "L3MON4D3/LuaSnip",
-            dependencies = {
-                "rafamadriz/friendly-snippets",
-            },
-            config = function()
-                require("luasnip.loaders.from_vscode").lazy_load()
-            end,
-        },
+        "L3MON4D3/LuaSnip",
+        "rafamadriz/friendly-snippets",
         "onsails/lspkind.nvim",
     },
     config = function()
@@ -23,8 +16,10 @@ return {
         local luasnip = require("luasnip")
         local lspkind = require("lspkind")
 
+        require("luasnip.loaders.from_vscode").lazy_load()
+
         local function has_words_before()
-            local line, col = table.unpack(vim.api.nvim_win_get_cursor(0))
+            local line, col = unpack(vim.api.nvim_win_get_cursor(0))
             return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
         end
 
@@ -67,7 +62,7 @@ return {
             sources = cmp.config.sources({
                 { name = "nvim_lsp", max_item_count = 12, priority = 10 },
                 { name = "luasnip",  max_item_count = 8,  priority = 7 },
-                { name = "buffer",   max_item_count = 5,  priority = 5, keyword_length = 3 },
+                { name = "buffer",   max_item_count = 5,  priority = 5, keyword_length = 2 },
                 { name = "path",     max_item_count = 5,  priority = 4 },
             }),
             formatting = {
@@ -89,18 +84,18 @@ return {
             },
             window = {
                 completion = cmp.config.window.bordered({
-                    border = "rounded",
-                    winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None",
+                    border = "single",
+                    winhighlight = "Normal:Normal,FloatBorder:Normal,CursorLine:PmenuSel,Search:None",
                     scrollbar = false,
                 }),
                 documentation = cmp.config.window.bordered({
-                    border = "rounded",
-                    winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None",
+                    border = "single",
+                    winhighlight = "Normal:Normal,FloatBorder:Normal,CursorLine:PmenuSel,Search:None",
                 }),
             },
             performance = {
-                debounce = 30,
-                throttle = 15,
+                debounce = 50,
+                throttle = 30,
                 fetching_timeout = 80,
                 async_budget = 1,
                 max_view_entries = 12,
@@ -113,8 +108,6 @@ return {
                     cmp.config.compare.score,
                     cmp.config.compare.recently_used,
                     cmp.config.compare.kind,
-                    cmp.config.compare.length,
-                    cmp.config.compare.order,
                 },
             },
             experimental = {
@@ -132,9 +125,10 @@ return {
 
         cmp.setup.cmdline("/", {
             mapping = cmp.mapping.preset.cmdline(),
-            sources = {
-                { name = "buffer", max_item_count = 10 },
-            },
+            sources = cmp.config.sources({
+                { name = "buffer",   max_item_count = 10 },
+                { name = "nvim_lsp", max_item_count = 5 },
+            }),
         })
     end,
 }
