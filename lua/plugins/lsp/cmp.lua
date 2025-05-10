@@ -65,6 +65,9 @@
 
 return {
 	{
+		"hrsh7th/nvim-cmp", -- Add this line - this is the missing core dependency
+	},
+	{
 		"hrsh7th/cmp-nvim-lsp",
 	},
 	{
