@@ -2,6 +2,8 @@ return {
     {
         "neovim/nvim-lspconfig",
         config = function()
+
+            -- diagnostics settings
             vim.diagnostic.config({ virtual_text = true })
 
             -- define a configuration for an LSP client.
@@ -30,11 +32,33 @@ return {
                     diagnostics = { globals = { "vim" } },
                 }
             }
-            -- enable the lsp server
-            vim.lsp.engble('luals')
+            -- python setup
+            vim.lsp.config['basedpyright'] = {
+                -- Command and arguments to start the server.
+                cmd = { "basedpyright-langserver", "--stdio" },
+
+                -- Filetypes to automatically attach to.
+                filetypes = { 'python' },
+
+                -- Sets the "root directory" to the parent directory of the file in the
+                -- the connection to the same LSP server.
+                root_markers =   { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", "pyrightconfig.json", ".git" },
+
+                -- Specific settings to send to the server. The schema for this is
+                settings = {
+                    basedpyright = {
+                        analysis = {
+                            autoSearchPaths = true,
+                            diagnosticMode = "workspace",
+                            useLibraryCodeForTypes = true
+                        }
+                    }
+                },
+
+            }
+            -- enable the lsp servers
+            vim.lsp.enable('luals')
             vim.lsp.enable('basedpyright')
-
-
         end,
     }
 }
