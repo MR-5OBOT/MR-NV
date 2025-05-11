@@ -2,6 +2,7 @@ return {
     {
         "neovim/nvim-lspconfig",
         config = function()
+            vim.diagnostic.config({ virtual_text = true })
 
             -- define a configuration for an LSP client.
             vim.lsp.config['luals'] = {
@@ -30,9 +31,8 @@ return {
                 }
             }
             -- enable the lsp server
-            vim.lsp.enable('luals') 
+            vim.lsp.engble('luals')
             vim.lsp.enable('basedpyright')
-
 
         end,
     }
