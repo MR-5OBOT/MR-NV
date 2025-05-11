@@ -32,7 +32,8 @@ return {
 					"lua_ls",
 					"html",
 					"cssls",
-					"pylsp",
+					-- "pylsp",
+					"basedpyright",
 				},
 			})
 
@@ -78,7 +79,7 @@ return {
 			})
 
 			-- Other LSPs
-			for _, server in ipairs({ "bashls", "cssls", "html", "pylsp" }) do
+			for _, server in ipairs({ "bashls", "cssls", "html", "basedpyright" }) do
 				lspconfig[server].setup({
 					capabilities = capabilities,
 					on_attach = on_attach,
