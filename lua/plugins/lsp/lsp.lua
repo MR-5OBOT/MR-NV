@@ -15,7 +15,7 @@ return {
                 -- current buffer that contains either a ".luarc.json" or a
                 -- ".luarc.jsonc" file. Files that share a root directory will reuse
                 -- the connection to the same LSP server.
-                root_markers = { '.luarc.json', '.luarc.jsonc' },
+                root_markers = { '.luarc.json', '.luarc.jsonc', '.git' },
 
                 -- Specific settings to send to the server. The schema for this is
                 -- defined by the server. For example the schema for lua-language-server
@@ -25,7 +25,8 @@ return {
                         runtime = {
                             version = 'LuaJIT',
                         }
-                    }
+                    },
+                    diagnostics = { globals = { "vim" } },
                 }
             }
             -- enable the lsp server
