@@ -39,3 +39,9 @@ vim.api.nvim_create_autocmd("TextYankPost", {
         vim.highlight.on_yank()
     end,
 })
+
+-- Open help in a right split window
+vim.cmd([[
+  autocmd FileType help wincmd L
+]])
+

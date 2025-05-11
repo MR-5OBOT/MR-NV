@@ -4,7 +4,21 @@ return {
         config = function()
 
             -- diagnostics settings
-            vim.diagnostic.config({ virtual_text = true })
+            vim.diagnostic.config({
+                virtual_text = {
+                    prefix = '●',
+                    source = 'if_many',
+                },
+                update_in_insert = true,
+                severity_sort = true,
+                float = {
+                    focusable = false,
+                    style = 'minimal',
+                    border = 'single',
+                    header = '',
+                    prefix = '',
+                },
+            })
 
             -- define a configuration for an LSP client.
             vim.lsp.config['luals'] = {
@@ -34,31 +48,31 @@ return {
             }
             -- python setup
             vim.lsp.config['basedpyright'] = {
-                -- Command and arguments to start the server.
                 cmd = { "basedpyright-langserver", "--stdio" },
-
-                -- Filetypes to automatically attach to.
                 filetypes = { 'python' },
-
-                -- Sets the "root directory" to the parent directory of the file in the
-                -- the connection to the same LSP server.
                 root_markers =   { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", "pyrightconfig.json", ".git" },
-
-                -- Specific settings to send to the server. The schema for this is
                 settings = {
                     basedpyright = {
                         analysis = {
                             autoSearchPaths = true,
-                            diagnosticMode = "workspace",
-                            useLibraryCodeForTypes = true
+                            diagnosticMode = "openFilesOnly",
+                            typeCheckingMode = "standard",
+                            useLibraryCodeForTypes = true,
+                            inlayHints = {
+                                callArgumentNames = true,
+                                variableTypes = true,
+                                functionReturnTypes = true,
+                                genericTypes = true,
+
+                            },
                         }
                     }
                 },
-
             }
             -- enable the lsp servers
             vim.lsp.enable('luals')
             vim.lsp.enable('basedpyright')
+            vim.lsp.enable('bashls')
         end,
     }
 }
