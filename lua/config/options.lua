@@ -15,7 +15,7 @@ opt.signcolumn = "yes" -- Always show sign column for LSP diagnostics
 opt.scrolloff = 8 -- Keep 8 lines visible above/below cursor
 opt.mouse = "nv" -- Mouse in normal/visual modes (avoids lspsaga.nvim conflicts)
 opt.wrap = false
-opt.laststatus = 0
+-- opt.laststatus = 0
 
 -- Editing
 opt.autoindent = true -- Auto-indent new lines
