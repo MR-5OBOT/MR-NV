@@ -34,6 +34,7 @@ return {
             vim.lsp.engble('luals')
             vim.lsp.enable('basedpyright')
 
+
         end,
     }
 }
