@@ -13,7 +13,7 @@ vim.g.maplocalleader = " "
 
 require("config.options")
 require("config.keymaps")
-require("config.lazy-cfg")
+require("config.lazy")
 -- require("config.autocommands")
 
 local ag = vim.api.nvim_create_augroup

@@ -33,7 +33,7 @@ vim.opt.rtp:prepend(lazypath)
 -- Setup Lazy.nvim with plugins
 require("lazy").setup({
   { import = "plugins" },
-  { import = "plugins.lsp" },
+  -- { import = "plugins.lsp" },
   { import = "plugins.helpers" },
   { "folke/neoconf.nvim",         cmd = "Neoconf" },
   { "folke/neodev.nvim" },
