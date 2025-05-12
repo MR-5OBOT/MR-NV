@@ -21,10 +21,10 @@ vim.keymap.set("n", "<leader>mx", "<cmd>!chmod +x %<CR>", { desc = "Chmod +x wit
 
 vim.keymap.set("n", "<leader>ms", ":%s/", { desc = "multi select & replace" }) -- Easier multi select and remove
 vim.keymap.set(
-    "v",
-    "<leader>ms",
-    [[:s//g<Left><Left>]],
-    { desc = "Multi-select & replace", noremap = true, silent = true }
+  "v",
+  "<leader>ms",
+  [[:s//g<Left><Left>]],
+  { desc = "Multi-select & replace", noremap = true, silent = true }
 )
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")                                              -- move selected lines DOWN
@@ -38,9 +38,13 @@ vim.keymap.set("n", "<C-n>", ":Telescope colorscheme<CR>")
 
 -- run pthon files
 local function run_python_in_tmux()
-    local file = vim.fn.expand("%:p")
-    local cmd =
-        string.format("tmux split-window -h 'clear; python3 \"%s\"; echo; echo Press enter to exit...; read'", file)
-    vim.fn.system(cmd)
+  local file = vim.fn.expand("%:p")
+  local cmd =
+      string.format("tmux split-window -h 'clear; python3 \"%s\"; echo; echo Press enter to exit...; read'", file)
+  vim.fn.system(cmd)
 end
 vim.keymap.set("n", "<leader>rp", run_python_in_tmux, { desc = "Run current Python file in right tmux split" })
+
+
+-- float diagnostics
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = "Show diagnostic float" })
