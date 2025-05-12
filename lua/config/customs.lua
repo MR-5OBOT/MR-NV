@@ -18,7 +18,6 @@ vim.diagnostic.config({
     source = "if_many",
   },
   signs = true,
-  local x = 3,
   update_in_insert = true,
   severity_sort = true,
   float = {

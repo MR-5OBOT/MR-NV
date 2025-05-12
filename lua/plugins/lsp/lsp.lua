@@ -34,7 +34,7 @@ return {
           basedpyright = {
             analysis = {
               autoSearchPaths = true,
-              diagnosticMode = "openFilesOnly",
+              diagnosticMode = "workspace",
               typeCheckingMode = "standard",
               useLibraryCodeForTypes = true,
               inlayHints = {
@@ -54,22 +54,22 @@ return {
       vim.lsp.enable('bashls')
 
       -- Attach to lsp
-      vim.api.nvim_create_autocmd('LspAttach', {
-        callback = function(args)
-          local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
-          if not client then return end -- do nothing if lsp no attached
-
-          -- Auto-format on save.
-          if client:supports_method('textDocument/formatting') then
-            vim.api.nvim_create_autocmd('BufWritePre', {
-              buffer = args.buf,
-              callback = function()
-                vim.lsp.buf.format({ bufnr = args.buf, id = client.id, timeout_ms = 1000 })
-              end,
-            })
-          end
-        end,
-      })
+      -- vim.api.nvim_create_autocmd('LspAttach', {
+      --   callback = function(args)
+      --     local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+      --     if not client then return end -- do nothing if lsp no attached
+      --
+      --     -- Auto-format on save.
+      --     if client:supports_method('textDocument/formatting') then
+      --       vim.api.nvim_create_autocmd('BufWritePre', {
+      --         buffer = args.buf,
+      --         callback = function()
+      --           vim.lsp.buf.format({ bufnr = args.buf, id = client.id, timeout_ms = 1000 })
+      --         end,
+      --       })
+      --     end
+      --   end,
+      -- })
     end,
   }
 }
