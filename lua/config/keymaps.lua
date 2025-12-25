@@ -36,7 +36,7 @@ vim.keymap.set("n", "k", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr 
 -- colorscheme picker
 vim.keymap.set("n", "<C-n>", ":Telescope colorscheme<CR>")
 
--- search and replace across teh intire project dir for python
+-- search and replace across the intire project dir for python
 vim.keymap.set("n", "<leader>rr", function()
 	local old = vim.fn.input("Replace: ")
 	if old == "" then

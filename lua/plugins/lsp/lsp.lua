@@ -1,75 +1,73 @@
 return {
-  {
-    "neovim/nvim-lspconfig",
-    config = function()
-      -- define a configuration for an LSP client.
-      vim.lsp.config['luals'] = {
-        -- Command and arguments to start the server.
-        cmd = { 'lua-language-server' },
-        -- Filetypes to automatically attach to.
-        filetypes = { 'lua' },
-        -- Sets the "root directory" to the parent directory of the file in the
-        -- current buffer that contains either a ".luarc.json" or a
-        -- ".luarc.jsonc" file. Files that share a root directory will reuse
-        -- the connection to the same LSP server.
-        root_markers = { '.luarc.json', '.luarc.jsonc', '.git' },
-        -- Specific settings to send to the server. The schema for this is
-        -- defined by the server. For example the schema for lua-language-server
-        -- can be found here https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json
-        settings = {
-          Lua = {
-            runtime = {
-              version = 'LuaJIT',
-            }
-          },
-          diagnostics = { globals = { "vim" } },
-        }
-      }
-      -- python setup
-      vim.lsp.config['basedpyright'] = {
-        cmd = { "basedpyright-langserver", "--stdio" },
-        filetypes = { 'python' },
-        root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", "pyrightconfig.json", ".git" },
-        settings = {
-          basedpyright = {
-            analysis = {
-              autoSearchPaths = true,
-              diagnosticMode = "workspace",
-              typeCheckingMode = "standard",
-              useLibraryCodeForTypes = true,
-              inlayHints = {
-                callArgumentNames = true,
-                variableTypes = true,
-                functionReturnTypes = true,
-                genericTypes = true,
+	{
+		"neovim/nvim-lspconfig",
+		config = function()
+			local lspconfig = require("lspconfig")
 
-              },
-            }
-          }
-        },
-      }
-      -- enable the lsp servers
-      vim.lsp.enable('luals')
-      vim.lsp.enable('basedpyright')
-      vim.lsp.enable('bashls')
+			-- Shared on_attach for common keymaps + Ruff-specific hover disable
+			local on_attach = function(client, bufnr)
+				-- Example keymaps (customize or remove as needed)
+				local bufmap = function(mode, lhs, rhs, desc)
+					vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
+				end
 
-      -- Attach to lsp
-      -- vim.api.nvim_create_autocmd('LspAttach', {
-      --   callback = function(args)
-      --     local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
-      --     if not client then return end -- do nothing if lsp no attached
-      --
-      --     -- Auto-format on save.
-      --     if client:supports_method('textDocument/formatting') then
-      --       vim.api.nvim_create_autocmd('BufWritePre', {
-      --         buffer = args.buf,
-      --         callback = function()
-      --           vim.lsp.buf.format({ bufnr = args.buf, id = client.id, timeout_ms = 1000 })
-      --         end,
-      --       })
-      --     end
-      --   end,
-      -- })
-    end,
-  }
+				bufmap("n", "gd", vim.lsp.buf.definition, "Go to definition")
+				bufmap("n", "gr", vim.lsp.buf.references, "Go to references")
+				bufmap("n", "K", vim.lsp.buf.hover, "Hover documentation")
+				bufmap("n", "<leader>ca", vim.lsp.buf.code_action, "Code action")
+				bufmap("n", "<leader>rn", vim.lsp.buf.rename, "Rename symbol")
+				bufmap("n", "<leader>f", function()
+					vim.lsp.buf.format({ async = true })
+				end, "Format")
+
+				-- Disable hover for Ruff to avoid conflict with basedpyright
+				if client.name == "ruff" then
+					client.server_capabilities.hoverProvider = false
+				end
+			end
+
+			-- Lua LSP (unchanged)
+			lspconfig.lua_ls.setup({
+				on_attach = on_attach,
+				settings = {
+					Lua = {
+						runtime = { version = "LuaJIT" },
+						diagnostics = { globals = { "vim" } },
+					},
+				},
+			})
+
+			-- Basedpyright (primary LSP)
+			lspconfig.basedpyright.setup({
+				on_attach = on_attach,
+				settings = {
+					basedpyright = {
+						analysis = {
+							autoSearchPaths = true,
+							useLibraryCodeForTypes = true,
+							diagnosticMode = "workspace", -- or "openFilesOnly" for large projects
+							typeCheckingMode = "recommended", -- change to "strict" if you want more rigor
+							autoImportCompletions = true,
+							inlayHints = {
+								callArgumentNames = true,
+								variableTypes = true,
+								functionReturnTypes = true,
+								genericTypes = true,
+							},
+						},
+					},
+				},
+			})
+
+			-- Ruff (linter/formatter only)
+			lspconfig.ruff.setup({
+				on_attach = on_attach,
+			})
+
+			-- Bash (unchanged)
+			lspconfig.bashls.setup({
+				on_attach = on_attach,
+			})
+		end,
+	},
 }
