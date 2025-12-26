@@ -3,5 +3,5 @@ return {
 	require("plugins.lsp.cmp"),
 	require("plugins.lsp.mason"),
 	require("plugins.lsp.conform"),
-	require("plugins.lsp.lspgaga"),
+	-- require("plugins.lsp.lspgaga"),
 }
