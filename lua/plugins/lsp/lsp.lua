@@ -20,6 +20,11 @@ return {
 					vim.lsp.buf.format({ async = true })
 				end, "Format")
 
+				-- Enable Inlay Hints if the server supports them
+				if client.supports_method("textDocument/inlayHint") then
+					vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+				end
+
 				-- Disable hover for Ruff to avoid conflict with basedpyright
 				if client.name == "ruff" then
 					client.server_capabilities.hoverProvider = false
@@ -46,7 +51,7 @@ return {
 							autoSearchPaths = true,
 							useLibraryCodeForTypes = true,
 							diagnosticMode = "workspace", -- or "openFilesOnly" for large projects
-							typeCheckingMode = "recommended", -- change to "strict" if you want more rigor
+							typeCheckingMode = "basic", -- change to "strict" if you want more rigor
 							autoImportCompletions = true,
 							inlayHints = {
 								callArgumentNames = true,
