@@ -53,6 +53,7 @@ return {
 								reportAssignmentType = false,
 								reportUnusedVariable = false,
 								reportArgumentType = false,
+								reportUnusedImport = false,
 							},
 
 							inlayHints = {

@@ -1,5 +1,5 @@
 -- ===============================
--- Mason + LSP auto-install
+-- Mason + LSP auto-install ONLY (no setup)
 -- ===============================
 return {
 	{
@@ -13,7 +13,9 @@ return {
 		config = function()
 			require("mason-lspconfig").setup({
 				ensure_installed = { "basedpyright", "ruff", "lua_ls", "bashls" },
-				automatic_installation = true,
+
+				-- Disable automatic enabling/setup of installed servers
+				automatic_enable = false,
 			})
 		end,
 	},
