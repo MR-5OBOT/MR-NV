@@ -52,9 +52,7 @@ return {
 							diagnosticSeverityOverrides = {
 								reportAssignmentType = false,
 								reportUnusedVariable = false,
-								-- reportMissingTypeStubs = "information",
-								-- reportAny = "none", -- Ban implicit/explicit Any if desired
-								-- reportUnusedCallResult = "none",
+								reportArgumentType = false,
 							},
 
 							inlayHints = {
