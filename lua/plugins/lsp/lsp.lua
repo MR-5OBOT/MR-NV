@@ -16,22 +16,14 @@ return {
 				bufmap("n", "K", vim.lsp.buf.hover, "Hover documentation")
 				bufmap("n", "<leader>ca", vim.lsp.buf.code_action, "Code action")
 				bufmap("n", "<leader>rn", vim.lsp.buf.rename, "Rename symbol")
-				bufmap("n", "<leader>f", function()
-					vim.lsp.buf.format({ async = true })
-				end, "Format")
 
 				-- Enable Inlay Hints if the server supports them
 				if client.supports_method("textDocument/inlayHint") then
 					vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 				end
-
-				-- Disable hover for Ruff to avoid conflict with basedpyright
-				if client.name == "ruff" then
-					client.server_capabilities.hoverProvider = false
-				end
 			end
 
-			-- Lua LSP (unchanged)
+			-- Lua LSP
 			lspconfig.lua_ls.setup({
 				on_attach = on_attach,
 				settings = {
@@ -53,25 +45,36 @@ return {
 							diagnosticMode = "workspace", -- or "openFilesOnly" for large projects
 							typeCheckingMode = "basic", -- change to "strict" if you want more rigor
 							autoImportCompletions = true,
+							autoFormatStrings = true,
+							disableOrganizeImports = true,
+
+							-- If you want to disable specific reports:
+							diagnosticSeverityOverrides = {
+								reportAssignmentType = false,
+								reportUnusedVariable = false,
+								-- reportMissingTypeStubs = "information",
+								-- reportAny = "none", -- Ban implicit/explicit Any if desired
+								-- reportUnusedCallResult = "none",
+							},
+
 							inlayHints = {
-								callArgumentNames = true,
 								variableTypes = true,
+								callArgumentNames = true,
 								functionReturnTypes = true,
 								genericTypes = true,
+								callArgumentNamesMatching = true,
 							},
 						},
 					},
 				},
 			})
 
-			-- Ruff (linter/formatter only)
 			lspconfig.ruff.setup({
-				on_attach = on_attach,
-			})
-
-			-- Bash (unchanged)
-			lspconfig.bashls.setup({
-				on_attach = on_attach,
+				on_attach = function(client, bufnr)
+					-- Optional: disable Ruff hover if you prefer basedpyright's
+					client.server_capabilities.hoverProvider = false
+					on_attach(client, bufnr) -- keep your shared keymaps
+				end,
 			})
 		end,
 	},
