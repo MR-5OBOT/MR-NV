@@ -3,7 +3,6 @@ return {
 		"neovim/nvim-lspconfig",
 		config = function()
 			local lspconfig = require("lspconfig")
-
 			-- Shared on_attach for common keymaps + Ruff-specific hover disable
 			local on_attach = function(client, bufnr)
 				-- Example keymaps (customize or remove as needed)
