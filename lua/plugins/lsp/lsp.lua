@@ -33,7 +33,6 @@ return {
 				},
 			})
 
-			-- Basedpyright (primary LSP)
 			lspconfig.basedpyright.setup({
 				on_attach = on_attach,
 				settings = {
