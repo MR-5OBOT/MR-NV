@@ -34,8 +34,6 @@ return {
 				end,
 			})
 
-			-- 2. SERVER CONFIGURATIONS (Neovim 0.11+ Style)
-
 			-- Lua LSP
 			vim.lsp.config("lua_ls", {
 				settings = {
