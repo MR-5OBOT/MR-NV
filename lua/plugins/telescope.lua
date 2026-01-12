@@ -13,6 +13,7 @@ return {
 
 		telescope.setup({
 			defaults = {
+
 				file_ignore_patterns = {
 					"^.git/",
 					"^node_modules/",
@@ -22,18 +23,20 @@ return {
 					"^.env/",
 				},
 				hidden = true,
-				-- layout_config = {
-				--     horizontal = {
-				--         prompt_position = "bottom",
-				--         width = 0.5,
-				--         height = 0.8,
-				--         preview_width = 0.5,
-				--     },
-				-- },
+				layout_config = {
+					horizontal = {
+						prompt_position = "bottom",
+						width = 0.5,
+						height = 0.8,
+						preview_width = 0.5,
+					},
+				},
 				prompt_prefix = "   ",
 				selection_caret = " ",
 				entry_prefix = "  ",
-				borderchars = { " ", " ", " ", " ", " ", " ", " ", " " },
+				borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+				-- borderchars = { " ", " ", " ", " ", " ", " ", " ", " " },
+				border = true,
 				results_title = false,
 				preview_title = false,
 				winblend = 0,
@@ -59,7 +62,7 @@ return {
 					},
 				},
 				buffers = {
-					theme = "dropdown",
+					theme = "ivy",
 					previewer = false,
 					sort_lastused = true,
 					layout_config = {
@@ -126,12 +129,23 @@ return {
 		map("n", "<leader>fc", builtin.commands, { desc = "Commands" })
 
 		-- Clean UI colors for Monochrome
-		vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = "NONE" })
-		vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = "#444444", bg = "NONE" })
-		vim.api.nvim_set_hl(0, "TelescopePromptNormal", { bg = "NONE" })
-		vim.api.nvim_set_hl(0, "TelescopePromptBorder", { fg = "#444444", bg = "NONE" })
-		vim.api.nvim_set_hl(0, "TelescopePromptTitle", { fg = "#999999", bold = true })
-		vim.api.nvim_set_hl(0, "TelescopeResultsTitle", { fg = "#666666" })
-		vim.api.nvim_set_hl(0, "TelescopePreviewTitle", { fg = "#444444" })
+		local border_color = "#444444" -- Dark grey for a subtle look
+		local text_dim = "#666666"
+
+		local highlights = {
+			TelescopeNormal = { bg = "NONE" },
+			TelescopeBorder = { fg = border_color, bg = "NONE" },
+			TelescopePromptNormal = { bg = "NONE" },
+			TelescopePromptBorder = { fg = border_color, bg = "NONE" },
+			TelescopePromptTitle = { fg = "#999999", bold = true },
+			TelescopeResultsBorder = { fg = border_color, bg = "NONE" },
+			TelescopeResultsTitle = { fg = text_dim },
+			TelescopePreviewBorder = { fg = border_color, bg = "NONE" },
+			TelescopePreviewTitle = { fg = border_color },
+		}
+
+		for group, hl in pairs(highlights) do
+			vim.api.nvim_set_hl(0, group, hl)
+		end
 	end,
 }

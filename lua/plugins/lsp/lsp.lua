@@ -2,29 +2,42 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		config = function()
-			local lspconfig = require("lspconfig")
-			-- Shared on_attach for common keymaps + Ruff-specific hover disable
-			local on_attach = function(client, bufnr)
-				-- Example keymaps (customize or remove as needed)
-				local bufmap = function(mode, lhs, rhs, desc)
-					vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
-				end
+			-- 1. GLOBAL ATTACH HANDLER
+			-- Instead of passing on_attach to every server, we use an autocommand.
+			-- This is the modern, more efficient way to handle keymaps and logic.
+			vim.api.nvim_create_autocmd("LspAttach", {
+				group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+				callback = function(ev)
+					local bufnr = ev.buf
+					local client = vim.lsp.get_client_by_id(ev.data.client_id)
 
-				bufmap("n", "gd", vim.lsp.buf.definition, "Go to definition")
-				bufmap("n", "gr", vim.lsp.buf.references, "Go to references")
-				bufmap("n", "K", vim.lsp.buf.hover, "Hover documentation")
-				bufmap("n", "<leader>ca", vim.lsp.buf.code_action, "Code action")
-				bufmap("n", "<leader>rn", vim.lsp.buf.rename, "Rename symbol")
+					-- Shared Keymaps
+					local bufmap = function(mode, lhs, rhs, desc)
+						vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
+					end
 
-				-- Enable Inlay Hints if the server supports them
-				if client.supports_method("textDocument/inlayHint") then
-					vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-				end
-			end
+					bufmap("n", "gd", vim.lsp.buf.definition, "Go to definition")
+					bufmap("n", "gr", vim.lsp.buf.references, "Go to references")
+					bufmap("n", "K", vim.lsp.buf.hover, "Hover documentation")
+					bufmap("n", "<leader>ca", vim.lsp.buf.code_action, "Code action")
+					bufmap("n", "<leader>rn", vim.lsp.buf.rename, "Rename symbol")
+
+					-- Enable Inlay Hints if supported
+					if client and client.supports_method("textDocument/inlayHint") then
+						vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+					end
+
+					-- Specific logic for Ruff: Disable hover to let Pyright handle it
+					if client and client.name == "ruff" then
+						client.server_capabilities.hoverProvider = false
+					end
+				end,
+			})
+
+			-- 2. SERVER CONFIGURATIONS (Neovim 0.11+ Style)
 
 			-- Lua LSP
-			lspconfig.lua_ls.setup({
-				on_attach = on_attach,
+			vim.lsp.config("lua_ls", {
 				settings = {
 					Lua = {
 						runtime = { version = "LuaJIT" },
@@ -32,47 +45,40 @@ return {
 					},
 				},
 			})
+			vim.lsp.enable("lua_ls")
 
-			lspconfig.basedpyright.setup({
-				on_attach = on_attach,
+			-- BasedPyright
+			vim.lsp.config("basedpyright", {
 				settings = {
 					basedpyright = {
 						analysis = {
 							autoSearchPaths = true,
 							useLibraryCodeForTypes = true,
-							diagnosticMode = "workspace", -- or "openFilesOnly" for large projects
-							typeCheckingMode = "basic", -- change to "strict" if you want more rigor
+							diagnosticMode = "workspace",
+							typeCheckingMode = "basic",
 							autoImportCompletions = true,
 							autoFormatStrings = true,
 							disableOrganizeImports = true,
-
-							-- If you want to disable specific reports:
 							diagnosticSeverityOverrides = {
 								reportAssignmentType = false,
 								reportUnusedVariable = false,
 								reportArgumentType = false,
 								reportUnusedImport = false,
 							},
-
 							inlayHints = {
 								variableTypes = true,
 								callArgumentNames = true,
 								functionReturnTypes = true,
 								genericTypes = true,
-								callArgumentNamesMatching = true,
 							},
 						},
 					},
 				},
 			})
+			vim.lsp.enable("basedpyright")
 
-			lspconfig.ruff.setup({
-				on_attach = function(client, bufnr)
-					-- Optional: disable Ruff hover if you prefer basedpyright's
-					client.server_capabilities.hoverProvider = false
-					on_attach(client, bufnr) -- keep your shared keymaps
-				end,
-			})
+			-- Ruff
+			vim.lsp.enable("ruff")
 		end,
 	},
 }
