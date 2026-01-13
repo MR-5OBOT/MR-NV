@@ -7,7 +7,7 @@ return {
 			-- Set monochrome style
 			vim.g.monochrome_style = "amplified"
 
-			-- Try to set the colorscheme, with error handling
+			-- Set the colorscheme
 			local ok, _ = pcall(vim.cmd, "colorscheme monochrome")
 			if not ok then
 				vim.notify(
