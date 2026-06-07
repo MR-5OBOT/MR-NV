@@ -36,7 +36,6 @@ keymap("v", "K", ":m '<-2<CR>gv=gv")
 -- This makes 'j' and 'k' move by visual lines unless a count is provided (e.g., 10j)
 keymap("n", "j", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { expr = true })
 keymap("n", "k", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true })
-keymap("n", "<leader>wl", "<cmd>set wrap!<CR>", { desc = "Toggle line wrap" })
 
 -- 6. Plugins
 keymap("n", "<C-n>", ":Telescope colorscheme<CR>")
