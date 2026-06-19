@@ -23,7 +23,7 @@ return {
 					bufmap("n", "<leader>rn", vim.lsp.buf.rename, "Rename symbol")
 
 					-- Enable Inlay Hints if supported
-					if client and client.supports_method("textDocument/inlayHint") then
+					if client and client:supports_method("textDocument/inlayHint") then
 						vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 					end
 

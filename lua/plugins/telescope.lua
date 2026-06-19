@@ -39,6 +39,9 @@ return {
 				border = true,
 				results_title = false,
 				preview_title = false,
+				preview = {
+					treesitter = false,
+				},
 				winblend = 0,
 				mappings = {
 					i = {
