@@ -63,6 +63,8 @@ return {
         end, { "i", "s" }),
       }),
       sources = cmp.config.sources({
+        -- lazydev: Lua/vim API completions (group_index 0 = skip LuaLS dupes)
+        { name = "lazydev",  group_index = 0 },
         { name = "nvim_lsp", max_item_count = 12, priority = 10 },
         { name = "luasnip",  max_item_count = 8,  priority = 7 },
         { name = "buffer",   max_item_count = 5,  priority = 5, keyword_length = 2 },

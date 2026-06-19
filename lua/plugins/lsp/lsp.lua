@@ -77,6 +77,9 @@ return {
 
 			-- Ruff
 			vim.lsp.enable("ruff")
+
+			-- Bash
+			vim.lsp.enable("bashls")
 		end,
 	},
 }
