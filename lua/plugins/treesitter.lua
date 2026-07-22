@@ -20,6 +20,7 @@ return {
 			"markdown_inline",
 			"python",
 			"toml",
+			"typst",
 			"vim",
 			"vimdoc",
 			"yaml",

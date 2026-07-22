@@ -12,7 +12,7 @@ return {
 		dependencies = { "williamboman/mason.nvim" },
 		config = function()
 			require("mason-lspconfig").setup({
-				ensure_installed = { "basedpyright", "ruff", "lua_ls", "bashls" },
+				ensure_installed = { "basedpyright", "ruff", "lua_ls", "bashls", "tinymist" },
 
 				-- Disable automatic enabling/setup of installed servers
 				automatic_enable = false,
