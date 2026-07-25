@@ -13,15 +13,16 @@ opt.termguicolors = true  -- True color support
 opt.cursorline = true     -- Highlight current line
 opt.signcolumn = "yes"    -- Always show sign column for LSP diagnostics
 opt.scrolloff = 8         -- Keep 8 lines visible above/below cursor
-opt.mouse = "nv"          -- Mouse in normal/visual modes (avoids lspsaga.nvim conflicts)
+opt.mouse = "nv"          -- Mouse in normal/visual modes only
 opt.wrap = false
 -- opt.laststatus = 0
 
 -- Editing
 opt.autoindent = true         -- Auto-indent new lines
 opt.smartindent = true        -- Smart indenting for code
-opt.shiftwidth = 2            -- 4 spaces for indentation
-opt.tabstop = 4               -- 4 spaces for tabs
+opt.shiftwidth = 2            -- Spaces per indent step (>>, <<, autoindent)
+opt.tabstop = 2               -- Display width of a <Tab>
+opt.softtabstop = 2           -- Spaces inserted when pressing <Tab>
 opt.expandtab = true          -- Use spaces instead of tabs
 opt.clipboard = "unnamedplus" -- System clipboard integration
 

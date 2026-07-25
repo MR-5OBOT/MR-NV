@@ -36,7 +36,16 @@ require("lazy").setup({
   -- { import = "plugins.lsp" },
   { import = "plugins.helpers" },
   { "folke/neoconf.nvim",         cmd = "Neoconf" },
-  { "folke/neodev.nvim" },
+  {
+    "folke/lazydev.nvim",
+    ft = "lua", -- lazy-load on Lua files
+    opts = {
+      library = {
+        -- Type definitions for the `vim.uv` (libuv) async API
+        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+      },
+    },
+  },
   { "nvim-tree/nvim-web-devicons" },
 }, {
   performance = {

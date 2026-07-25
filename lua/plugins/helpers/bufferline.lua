@@ -15,16 +15,6 @@ return {
 				show_close_icon = false,
 				diagnostics = "nvim_lsp", -- Use built-in LSP diagnostics
 
-				-- Better integration with file explorers
-				offsets = {
-					{
-						filetype = "neo-tree",
-						text = "File Explorer",
-						text_align = "center",
-						separator = true,
-					},
-				},
-
 				-- Performance: Only show diagnostics if there's an error
 				diagnostics_indicator = function(count, level)
 					local icon = level:match("error") and " " or (level:match("warning") and " " or "")

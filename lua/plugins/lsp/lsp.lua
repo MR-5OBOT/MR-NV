@@ -77,6 +77,19 @@ return {
 
 			-- Ruff
 			vim.lsp.enable("ruff")
+
+			-- Bash
+			vim.lsp.enable("bashls")
+
+			-- Typst (tinymist). We preview with `typst watch`, so tinymist only
+			-- provides completion / diagnostics / hover / formatting, not PDF export.
+			vim.lsp.config("tinymist", {
+				settings = {
+					exportPdf = "never",
+					formatterMode = "typstyle",
+				},
+			})
+			vim.lsp.enable("tinymist")
 		end,
 	},
 }

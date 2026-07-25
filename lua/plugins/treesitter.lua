@@ -1,40 +1,44 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
+	branch = "main", -- new rewrite (incompatible with the old `master` config)
+	lazy = false, -- main branch does not support lazy-loading
 	build = ":TSUpdate",
 	config = function()
-		require("nvim-treesitter").setup({
-			ensure_installed = {
-				"bash",
-				"html",
-				"javascript",
-				"json",
-				"lua",
-				"markdown",
-				"css",
-				"python",
-				"vim",
-				"yaml",
-				"hyprlang",
-				"toml",
-				"vimdoc",
-			},
-			auto_install = true,
-			highlight = {
-				enable = true,
-				disable = function(lang, buf)
-					local max_filesize = 100 * 1024
-					local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-					if ok and stats and stats.size > max_filesize then
-						return true
-					end
-				end,
-				additional_vim_regex_highlighting = { "markdown" },
-			},
-			indent = { enable = true },
+		require("nvim-treesitter").setup()
+
+		-- Parsers to keep installed. On the `main` branch setup() ignores
+		-- `ensure_installed`, so we install them explicitly (no-op if present).
+		require("nvim-treesitter").install({
+			"bash",
+			"css",
+			"html",
+			"hyprlang",
+			"javascript",
+			"json",
+			"lua",
+			"markdown",
+			"markdown_inline",
+			"python",
+			"toml",
+			"typst",
+			"vim",
+			"vimdoc",
+			"yaml",
 		})
 
+		-- Hyprland *.conf -> hyprlang
 		vim.filetype.add({
 			pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
+		})
+
+		-- Enable highlight + indent per-buffer (only when a parser exists).
+		vim.api.nvim_create_autocmd("FileType", {
+			group = vim.api.nvim_create_augroup("user_treesitter", { clear = true }),
+			callback = function(args)
+				if pcall(vim.treesitter.start, args.buf) then
+					vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+				end
+			end,
 		})
 	end,
 }
