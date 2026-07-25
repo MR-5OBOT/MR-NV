@@ -39,3 +39,36 @@ keymap("n", "k", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true }
 
 -- 6. Plugins
 keymap("n", "<C-n>", ":Telescope colorscheme<CR>")
+
+-- 7. superfile (replaces yazi.nvim)
+keymap("n", "<leader>n", function()
+  local chooser = vim.fn.tempname()
+  local buf = vim.api.nvim_create_buf(false, true)
+  local win = vim.api.nvim_open_win(buf, true, {
+    relative = "editor",
+    width = math.floor(vim.o.columns * 0.9),
+    height = math.floor(vim.o.lines * 0.9),
+    row = math.floor(vim.o.lines * 0.05),
+    col = math.floor(vim.o.columns * 0.05),
+    border = "none",
+  })
+  vim.fn.jobstart({ "spf", "--chooser-file", chooser, vim.fn.expand("%:p:h") }, {
+    term = true,
+    on_exit = function()
+      if vim.api.nvim_win_is_valid(win) then
+        vim.api.nvim_win_close(win, true)
+      end
+      local f = io.open(chooser)
+      if not f then
+        return
+      end
+      local path = f:read("*l")
+      f:close()
+      os.remove(chooser)
+      if path and path ~= "" then
+        vim.cmd.edit(vim.fn.fnameescape(path))
+      end
+    end,
+  })
+  vim.cmd.startinsert()
+end, { desc = "Open superfile at current file" })
