@@ -5,7 +5,6 @@ return {
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-		{ "kdheepak/lazygit.nvim" },
 	},
 	config = function()
 		local actions = require("telescope.actions")
@@ -127,6 +126,8 @@ return {
 		map("n", "<leader>,", builtin.buffers, { desc = "List Buffers" })
 		map("n", "<leader>fg", builtin.live_grep, { desc = "Live Grep" })
 		map("n", "<leader>fh", builtin.help_tags, { desc = "Help Tags" })
+		map("n", "<leader>fs", builtin.lsp_document_symbols, { desc = "Document Symbols" })
+		map("n", "<leader>fS", builtin.lsp_dynamic_workspace_symbols, { desc = "Workspace Symbols" })
 		-- map("n", "<leader>/", builtin.current_buffer_fuzzy_find, { desc = "Fuzzy Find in Buffer" })
 		map("n", "<leader>fk", builtin.keymaps, { desc = "Keymaps" })
 		map("n", "<leader>fc", builtin.commands, { desc = "Commands" })

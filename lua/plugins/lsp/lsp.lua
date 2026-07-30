@@ -1,7 +1,13 @@
 return {
 	{
 		"neovim/nvim-lspconfig",
+		dependencies = { "hrsh7th/cmp-nvim-lsp" },
 		config = function()
+			-- Tell every LSP that nvim-cmp supports rich completion items.
+			vim.lsp.config("*", {
+				capabilities = require("cmp_nvim_lsp").default_capabilities(),
+			})
+
 			-- 1. GLOBAL ATTACH HANDLER
 			-- Instead of passing on_attach to every server, we use an autocommand.
 			-- This is the modern, more efficient way to handle keymaps and logic.
@@ -25,6 +31,11 @@ return {
 					-- Enable Inlay Hints if supported
 					if client and client:supports_method("textDocument/inlayHint") then
 						vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+						bufmap("n", "<leader>uh", function()
+							vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }), {
+								bufnr = bufnr,
+							})
+						end, "Toggle inlay hints")
 					end
 
 					-- Specific logic for Ruff: Disable hover to let Pyright handle it
@@ -58,9 +69,7 @@ return {
 							autoFormatStrings = true,
 							disableOrganizeImports = true,
 							diagnosticSeverityOverrides = {
-								reportAssignmentType = false,
 								reportUnusedVariable = false,
-								reportArgumentType = false,
 								reportUnusedImport = false,
 							},
 							inlayHints = {
@@ -80,6 +89,9 @@ return {
 
 			-- Bash
 			vim.lsp.enable("bashls")
+
+			-- TypeScript / JavaScript
+			vim.lsp.enable("ts_ls")
 
 			-- Typst (tinymist). We preview with `typst watch`, so tinymist only
 			-- provides completion / diagnostics / hover / formatting, not PDF export.

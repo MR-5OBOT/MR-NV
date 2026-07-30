@@ -36,7 +36,10 @@ opt.completeopt = { "menuone", "noselect" } -- For nvim-cmp
 opt.pumheight = 8                           -- Limit completion menu height
 
 -- Files
-opt.swapfile = false       -- Disable swap files
+local swapdir = vim.fn.stdpath("state") .. "/swap"
+vim.fn.mkdir(swapdir, "p")
+opt.directory = swapdir .. "//"
+opt.swapfile = true        -- Recover unsaved edits after a crash
 opt.undofile = true        -- Persistent undo
 opt.fileencoding = "utf-8" -- UTF-8 encoding for files
 

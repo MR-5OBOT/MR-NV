@@ -20,6 +20,8 @@ return {
 			"markdown_inline",
 			"python",
 			"toml",
+			"typescript",
+			"tsx",
 			"typst",
 			"vim",
 			"vimdoc",
