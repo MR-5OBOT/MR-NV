@@ -1,31 +1,29 @@
-local ignore_patterns = {
-	"node_modules",
-	"%.git",
-	"%.cache",
-	"dist",
-	"build",
-	"%.tmp",
-	"%.log",
+local command = {
+	"rg",
+	"--files",
+	"--hidden",
+	"--glob",
+	"!.git/**",
+	"--glob",
+	"!node_modules/**",
+	"--glob",
+	"!.cache/**",
+	"--glob",
+	"!dist/**",
+	"--glob",
+	"!build/**",
+	"--glob",
+	"!*.tmp",
+	"--glob",
+	"!*.log",
 }
 
 function _G.native_find(text, _)
-	local files = vim.fn.glob("**/*", true, true)
-	local result = {}
-	for _, f in ipairs(files) do
-		if vim.fn.isdirectory(f) == 0 then
-			local skip = false
-			for _, pat in ipairs(ignore_patterns) do
-				if f:match(pat) then
-					skip = true
-					break
-				end
-			end
-			if not skip then
-				result[#result + 1] = f
-			end
-		end
+	local result = vim.system(command, { text = true }):wait()
+	if result.code ~= 0 then
+		return {}
 	end
-	return vim.fn.matchfuzzy(result, text)
+	return vim.fn.matchfuzzy(vim.split(result.stdout, "\n", { trimempty = true }), text)
 end
 vim.opt.findfunc = "v:lua.native_find"
 
