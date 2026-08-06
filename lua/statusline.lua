@@ -37,11 +37,21 @@ function _G._statusline()
 end
 
 vim.api.nvim_create_autocmd("BufEnter", {
-	callback = function()
-		local root = vim.fn.system("git rev-parse --show-toplevel 2>/dev/null"):gsub("%s+$", "")
-		if root ~= "" then
-			vim.b.git_branch = vim.fn.system("git branch --show-current 2>/dev/null"):gsub("%s+$", "")
+	callback = function(args)
+		local root = vim.fs.root(args.buf, ".git")
+		if root then
+			vim.b.git_branch = nil
 			vim.b.rel_path = vim.fn.expand("%:p"):sub(#root + 2)
+			vim.system({ "git", "-C", root, "branch", "--show-current" }, { text = true }, function(result)
+				if result.code == 0 then
+					vim.schedule(function()
+						if vim.api.nvim_buf_is_valid(args.buf) then
+							vim.b[args.buf].git_branch = result.stdout:gsub("%s+$", "")
+							vim.cmd("redrawstatus!")
+						end
+					end)
+				end
+			end)
 		else
 			vim.b.git_branch = nil
 			vim.b.rel_path = vim.fn.expand("%:p:~")
