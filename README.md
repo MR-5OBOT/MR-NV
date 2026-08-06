@@ -1,31 +1,20 @@
-# Neovim configuration
+# Zero-Plugin Neovim
 
-A compact Neovim setup focused on Python, Bash, Lua, and occasional TypeScript.
+A minimal, fast Neovim configuration with zero plugins. Built entirely on Neovim 0.11+ native features.
 
-## Requirements
+## Features
 
-- Neovim 0.12+
-- `git`, `make`, and a C compiler for native Telescope FZF
-- A Nerd Font for icons (recommended)
-- `spf` for the `<leader>n` file browser
-- tmux only if you use the tmux-navigation mappings
+- **Native LSP** - zero-config language servers via `vim.lsp.enable()`
+- **Fuzzy Find** - `findfunc` with built-in `matchfuzzy()`
+- **Live Grep** - ripgrep integration with quickfix list
+- **File Tree** - `netrw` with clean keymaps
+- **Smart Statusline** - custom statusline with mode, git branch, diagnostics, and filetype
+- **Auto Formatting** - `stylua`/`prettier` on save, with LSP fallback
 
-## First start
+## Preview
+<img width="2285" height="1351" alt="image" src="https://github.com/user-attachments/assets/ae113832-b2b1-441b-8c3a-f6862a38104c" />
 
-Start Neovim normally. Lazy installs the pinned plugins from `lazy-lock.json`.
-Mason installs the configured language servers, formatters, and Python debug adapter.
 
-Useful commands:
+## Video
 
-- `:Lazy` — inspect or update plugins
-- `:Mason` — inspect installed tools
-- `:MasonToolsInstall` — install missing formatters/debug tools immediately
-- `:TSUpdate` — update Tree-sitter parsers
-- `:checkhealth` — inspect Neovim health
-- `make check` — parse every Lua configuration file
-
-## Upgrades
-
-Update intentionally: run `:Lazy update`, review the `lazy-lock.json` changes,
-then restart Neovim. Use `:MasonUpdate` separately when you want refreshed
-tool metadata; tools themselves do not auto-update.
+Built live in this video: [youtu.be/otRvw9neQkg](https://youtu.be/otRvw9neQkg)
