@@ -434,4 +434,3 @@ local hl = vim.api.nvim_set_hl
 for group, spec in pairs(groups) do
 	hl(0, group, spec)
 end
-
