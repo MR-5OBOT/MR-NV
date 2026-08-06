@@ -1,5 +1,5 @@
 -- lsp
-vim.lsp.enable({ "lua_ls", "tsgo" })
+vim.lsp.enable({ "lua_ls", "tsgo", "basedpyright" })
 vim.diagnostic.config({ virtual_text = true })
 
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -7,6 +7,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		local client = vim.lsp.get_client_by_id(ev.data.client_id)
 		if client ~= nil and client:supports_method("textDocument/completion") then
 			vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+		end
+		if client ~= nil and client:supports_method("textDocument/inlayHint") then
+			vim.lsp.inlay_hint.enable(true, { bufnr = ev.buf })
 		end
 	end,
 })
