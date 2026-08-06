@@ -7,7 +7,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 		vim.highlight.on_yank({ timeout = 200, visual = true })
 	end,
 })
-
 -- Restore cursor to file position in previous editing session
 vim.api.nvim_create_autocmd("BufReadPost", {
 	callback = function(args)
@@ -22,4 +21,3 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 		end
 	end,
 })
-
