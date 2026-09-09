@@ -23,8 +23,8 @@ return {
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		dependencies = { "williamboman/mason.nvim" },
 		opts = {
-			-- These are formatters/debuggers, not LSP servers.
-			ensure_installed = { "stylua", "prettier", "shfmt", "debugpy" },
+			-- These are formatters, not LSP servers.
+			ensure_installed = { "stylua", "prettier", "shfmt" },
 			auto_update = false,
 			run_on_start = true,
 			start_delay = 3000,

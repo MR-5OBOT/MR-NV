@@ -101,6 +101,8 @@ local groups = {
 	PmenuSel = { fg = c.gray1, bg = c.fg },
 	PmenuSbar = { fg = c.fg, bg = c.gray1 },
 	PmenuThumb = { fg = c.bg, bg = c.gray8 },
+	TinyCmdlineNormal = { fg = c.fg, bg = "NONE" },
+	TinyCmdlineBorder = { fg = c.gray3, bg = "NONE" },
 
 	SpellBad = { fg = c.orange, underline = true },
 	SpellCap = {},

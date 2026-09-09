@@ -1,7 +1,34 @@
 return {
 	"nvim-telescope/telescope.nvim",
-	tag = "0.1.8",
-	lazy = false,
+	tag = "v0.2.1",
+	lazy = true,
+	cmd = "Telescope",
+	keys = {
+		{
+			"<leader>ff",
+			function()
+				require("telescope.builtin").find_files({
+					follow = false,
+					find_command = {
+						"rg",
+						"--files",
+						"--glob",
+						"!.git/**",
+						"--iglob",
+						"!*.{png,jpg,jpeg,gif,bmp,webp,avif,heic,ico,tif,tiff,svg,mp3,wav,flac,ogg,opus,m4a,aac,wma,mid,midi,mp4,m4v,mkv,avi,mov,webm,wmv,flv,mpeg,mpg,3gp,pdf,zip,rar,7z,tar,gz,bz2,xz,zst,tgz,iso,ttf,otf,woff,woff2,eot,exe,dll,so,dylib,bin,o,obj,a,lib,class,jar,war,pyc,pyo,wasm,db,sqlite,sqlite3,doc,docx,xls,xlsx,ppt,pptx,odt,ods,odp,apk,aab,ipa,deb,rpm,dmg,glb,fbx,blend,stl,npy,npz,pkl,parquet}",
+					},
+				})
+			end,
+			desc = "Find Editable Files",
+		},
+		{ "<leader>,", "<cmd>Telescope buffers<cr>", desc = "List Buffers" },
+		{ "<leader>g", "<cmd>Telescope live_grep<cr>", desc = "Live Grep" },
+		{ "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Help Tags" },
+		{ "<leader>fs", "<cmd>Telescope lsp_document_symbols<cr>", desc = "Document Symbols" },
+		{ "<leader>fS", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", desc = "Workspace Symbols" },
+		{ "<leader>fk", "<cmd>Telescope keymaps<cr>", desc = "Keymaps" },
+		{ "<leader>fc", "<cmd>Telescope commands<cr>", desc = "Commands" },
+	},
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
@@ -21,7 +48,6 @@ return {
 					"^env/",
 					"^.env/",
 				},
-				hidden = true,
 				layout_config = {
 					horizontal = {
 						prompt_position = "bottom",
@@ -117,20 +143,6 @@ return {
 
 		-- Load extensions
 		telescope.load_extension("fzf")
-
-		-- Keymaps
-		local builtin = require("telescope.builtin")
-		local map = vim.keymap.set
-
-		map("n", "<leader>ff", builtin.find_files, { desc = "Find Files" })
-		map("n", "<leader>,", builtin.buffers, { desc = "List Buffers" })
-		map("n", "<leader>fg", builtin.live_grep, { desc = "Live Grep" })
-		map("n", "<leader>fh", builtin.help_tags, { desc = "Help Tags" })
-		map("n", "<leader>fs", builtin.lsp_document_symbols, { desc = "Document Symbols" })
-		map("n", "<leader>fS", builtin.lsp_dynamic_workspace_symbols, { desc = "Workspace Symbols" })
-		-- map("n", "<leader>/", builtin.current_buffer_fuzzy_find, { desc = "Fuzzy Find in Buffer" })
-		map("n", "<leader>fk", builtin.keymaps, { desc = "Keymaps" })
-		map("n", "<leader>fc", builtin.commands, { desc = "Commands" })
 
 		-- Clean UI colors for Monochrome
 		local border_color = "#444444" -- Dark grey for a subtle look

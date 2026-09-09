@@ -4,10 +4,8 @@ return {
 	lazy = false, -- main branch does not support lazy-loading
 	build = ":TSUpdate",
 	config = function()
-		require("nvim-treesitter").setup()
-
-		-- Parsers to keep installed. On the `main` branch setup() ignores
-		-- `ensure_installed`, so we install them explicitly (no-op if present).
+		-- Parsers to keep installed. The `main` branch has no `ensure_installed`,
+		-- so we install them explicitly (no-op if present).
 		require("nvim-treesitter").install({
 			"bash",
 			"css",

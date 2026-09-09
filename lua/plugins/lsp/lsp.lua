@@ -63,7 +63,6 @@ return {
 						analysis = {
 							autoSearchPaths = true,
 							useLibraryCodeForTypes = true,
-							diagnosticMode = "workspace",
 							typeCheckingMode = "basic",
 							autoImportCompletions = true,
 							autoFormatStrings = true,

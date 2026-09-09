@@ -13,13 +13,13 @@ A compact Neovim setup focused on Python, Bash, Lua, and occasional TypeScript.
 ## First start
 
 Start Neovim normally. Lazy installs the pinned plugins from `lazy-lock.json`.
-Mason installs the configured language servers, formatters, and Python debug adapter.
+Mason installs the configured language servers and formatters.
 
 Useful commands:
 
 - `:Lazy` — inspect or update plugins
 - `:Mason` — inspect installed tools
-- `:MasonToolsInstall` — install missing formatters/debug tools immediately
+- `:MasonToolsInstall` — install missing formatters immediately
 - `:TSUpdate` — update Tree-sitter parsers
 - `:checkhealth` — inspect Neovim health
 - `make check` — parse every Lua configuration file
