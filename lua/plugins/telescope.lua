@@ -7,16 +7,22 @@ return {
 		{
 			"<leader>ff",
 			function()
-				require("telescope.builtin").find_files({
-					follow = false,
-					find_command = {
+				-- Without ripgrep, fall back to Telescope's own file finder
+				-- (fd / find) instead of erroring out on a fresh machine.
+				local find_command = vim.fn.executable("rg") == 1
+					and {
 						"rg",
 						"--files",
 						"--glob",
 						"!.git/**",
 						"--iglob",
 						"!*.{png,jpg,jpeg,gif,bmp,webp,avif,heic,ico,tif,tiff,svg,mp3,wav,flac,ogg,opus,m4a,aac,wma,mid,midi,mp4,m4v,mkv,avi,mov,webm,wmv,flv,mpeg,mpg,3gp,pdf,zip,rar,7z,tar,gz,bz2,xz,zst,tgz,iso,ttf,otf,woff,woff2,eot,exe,dll,so,dylib,bin,o,obj,a,lib,class,jar,war,pyc,pyo,wasm,db,sqlite,sqlite3,doc,docx,xls,xlsx,ppt,pptx,odt,ods,odp,apk,aab,ipa,deb,rpm,dmg,glb,fbx,blend,stl,npy,npz,pkl,parquet}",
-					},
+					}
+					or nil
+
+				require("telescope.builtin").find_files({
+					follow = false,
+					find_command = find_command,
 				})
 			end,
 			desc = "Find Editable Files",
@@ -31,7 +37,13 @@ return {
 	},
 	dependencies = {
 		"nvim-lua/plenary.nvim",
-		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+		{
+			"nvim-telescope/telescope-fzf-native.nvim",
+			build = "make",
+			-- Native sorter, compiled at install time. Telescope works without
+			-- it, so skip the plugin entirely rather than fail the build.
+			enabled = vim.fn.executable("make") == 1 and vim.fn.executable("cc") == 1,
+		},
 	},
 	config = function()
 		local actions = require("telescope.actions")
@@ -141,8 +153,8 @@ return {
 			},
 		})
 
-		-- Load extensions
-		telescope.load_extension("fzf")
+		-- Load extensions (fzf is optional: see `enabled` on its spec above)
+		pcall(telescope.load_extension, "fzf")
 
 		-- Clean UI colors for Monochrome
 		local border_color = "#444444" -- Dark grey for a subtle look

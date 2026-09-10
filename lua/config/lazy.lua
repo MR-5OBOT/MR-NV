@@ -46,6 +46,13 @@ require("lazy").setup({
 		},
 	},
 }, {
+	-- Fresh install: show the local colorscheme while plugins download, and
+	-- fall back to a built-in one if it has not been sourced yet.
+	install = { colorscheme = { "mr5obot-theme", "habamax" } },
+	-- No plugin here needs luarocks; skipping it avoids a hererocks
+	-- bootstrap (and its warnings) on a machine without lua/luarocks.
+	rocks = { enabled = false },
+	change_detection = { notify = false },
 	performance = {
 		rtp = {
 			disabled_plugins = {

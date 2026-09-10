@@ -1,6 +1,12 @@
 -- ===============================
 -- Mason installs language servers; the tool installer handles non-LSP tools.
 -- ===============================
+local function has(exe)
+	return function()
+		return vim.fn.executable(exe) == 1
+	end
+end
+
 return {
 	{
 		"williamboman/mason.nvim",
@@ -23,8 +29,14 @@ return {
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		dependencies = { "williamboman/mason.nvim" },
 		opts = {
-			-- These are formatters, not LSP servers.
-			ensure_installed = { "stylua", "prettier", "shfmt" },
+			-- Formatters, not LSP servers. (`tree-sitter-cli` is deliberately
+			-- not here -- lua/plugins/treesitter.lua installs it itself, so it
+			-- is not held back by the debounce below.)
+			ensure_installed = {
+				"stylua",
+				"shfmt",
+				{ "prettier", condition = has("node") },
+			},
 			auto_update = false,
 			run_on_start = true,
 			start_delay = 3000,
